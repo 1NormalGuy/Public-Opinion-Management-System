@@ -1,0 +1,223 @@
+/* 全局样式 */
+body {
+  font-family: 'Orbitron', sans-serif; /* 使用独特字体 */
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* 渐变背景 */
+  margin: 0;
+  padding: 20px;
+  color: #00e5ff; /* 蓝色文字 */
+  overflow-x: hidden; /* 防止水平滚动 */
+}
+
+/* 顶部标题栏 */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+}
+
+.header h1 {
+  font-size: 3em;
+  margin: 0;
+  color: #00e5ff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* 主内容区 */
+.main-content {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* 上方盒子：谣言检测结果 */
+.rumor-detection {
+  background-color: rgba(26, 26, 26, 0.85); /* 半透明深灰色背景 */
+  border: 2px solid #00e5ff;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px #00e5ff;
+  position: relative;
+  overflow: hidden;
+}
+
+.rumor-detection h2 {
+  margin-top: 0;
+  color: #00e5ff;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+/* 垂直滚动文字容器 */
+.scrolling-text-container {
+  position: relative;
+  height: 150px; /* 增加高度以适应更大字体 */
+  overflow-y: scroll; /* 显示垂直滚动条 */
+  scrollbar-width: thin;
+  scrollbar-color: #00e5ff rgba(26,26,26,0.85);
+}
+
+/* 滚动条样式（适用于 Webkit） */
+.scrolling-text-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrolling-text-container::-webkit-scrollbar-track {
+  background: rgba(26,26,26,0.85);
+}
+
+.scrolling-text-container::-webkit-scrollbar-thumb {
+  background-color: #00e5ff;
+  border-radius: 4px;
+  border: 2px solid rgba(26,26,26,0.85);
+}
+
+/* 垂直滚动文字效果 */
+.scrolling-text {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.scrolling-text p.rumor-item {
+  margin: 0;
+  padding: 10px 0;
+  color: #ffffff;
+  text-shadow: 0 0 5px #00e5ff;
+  font-size: 1.8em; /* 增大字体大小 */
+  opacity: 0;
+  transition: opacity 1s, transform 1s;
+}
+
+.scrolling-text p.rumor-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scrolling-text p.rumor-item.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* 下方盒子布局 */
+.bottom-content {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* 左侧盒子：用户信任度分析 */
+.trust-analysis {
+  flex: 1;
+  min-width: 300px;
+  background-color: rgba(26, 26, 26, 0.85); /* 半透明深灰色背景 */
+  border: 2px solid #00e5ff;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px #00e5ff;
+}
+
+.trust-analysis h2 {
+  margin-top: 0;
+  color: #00e5ff;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+/* 右侧盒子：谣言传播路径 */
+.rumor-path {
+  flex: 2;
+  min-width: 400px;
+  background-color: rgba(26, 26, 26, 0.85); /* 半透明深灰色背景 */
+  border: 2px solid #00e5ff;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px #00e5ff;
+}
+
+.rumor-path h2 {
+  margin-top: 0;
+  color: #00e5ff;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+/* 图表容器 */
+.chart-container {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* 示例数据 */
+.sample-data {
+  background-color: rgba(26, 26, 26, 0.9);
+  border: 2px solid #00e5ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 10px;
+  box-shadow: 0 0 15px #00e5ff;
+  color: #ffffff;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+/* 模态框样式 */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.9); /* 黑色背景带更高透明度 */
+}
+
+.modal-content {
+  background-color: rgba(26, 26, 26, 0.95);
+  margin: 5% auto; /* 5% from the top and centered */
+  padding: 20px;
+  border: 1px solid #00e5ff;
+  width: 60%; /* 更窄以增强集中效果 */
+  border-radius: 10px;
+  color: #00e5ff;
+  box-shadow: 0 0 30px #00e5ff;
+  animation: fadeIn 0.5s;
+}
+
+.close {
+  color: #00e5ff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+.close:hover,
+.close:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .bottom-content {
+      flex-direction: column;
+  }
+
+  .trust-analysis, .rumor-path {
+      min-width: 100%;
+  }
+
+  .modal-content {
+      width: 80%;
+  }
+}

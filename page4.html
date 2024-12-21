@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>谣言检测 - Yaoyan</title>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <!-- 引入 Font Awesome（用于图标，可选） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts（用于独特字体，可选） -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 引入自定义样式 -->
+    <link rel="stylesheet" href="yaoyan.css">
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <div class="header">
+        <h1>谣言检测仪表板 - Yaoyan</h1>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 上方盒子：谣言检测结果 -->
+        <div class="rumor-detection" id="rumor-detection">
+            <h2>谣言检测结果</h2>
+            <div class="scrolling-text-container">
+                <div class="scrolling-text" id="scrolling-text">
+                    <!-- 动态插入谣言内容 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下方盒子：左侧用户信任度分析，右侧谣言传播路径 -->
+    <div class="bottom-content">
+        <!-- 左侧盒子：用户信任度分析 -->
+        <div class="trust-analysis" id="trust-analysis">
+            <h2>用户信任度分析</h2>
+            <div class="chart-container" id="trust-chart"></div>
+            <!-- 示例数据放在图表下方 -->
+            <div class="sample-data">
+                <p><strong>示例数据：</strong></p>
+                <p>分析用户对不同信息来源的信任度。</p>
+            </div>
+        </div>
+
+        <!-- 右侧盒子：谣言传播路径 -->
+        <div class="rumor-path" id="rumor-path">
+            <h2>谣言传播路径</h2>
+            <div class="chart-container" id="rumor-path-chart"></div>
+            <!-- 示例数据放在图表下方 -->
+            <div class="sample-data">
+                <p><strong>示例数据：</strong></p>
+                <p>可视化谣言在社交平台上的传播链条和扩散速度。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框结构 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body">
+                <!-- 模态框内容区域 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入自定义脚本 -->
+    <script src="yaoyan.js"></script>
+</body>
+</html>

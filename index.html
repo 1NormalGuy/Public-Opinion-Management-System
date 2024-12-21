@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Opinion Management System</title>
+    <!-- 引入 CSS -->
+    <link rel="stylesheet" href="index.css">
+    <!-- 引入 ECharts 主文件 -->
+    <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    <!-- 引入中国地图数据文件 -->
+    <script src="https://fastly.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+</head>
+<body>
+    <!-- 顶部标题横栏 -->
+    <header id="header">
+        <h1>舆情数据管理系统</h1>
+    </header>
+
+    <!-- 主容器 -->
+    <div id="main-container">
+        <!-- 左侧区域 -->
+        <aside id="left">
+            <div id="box1" class="box" onclick="openModal(1)">
+                <div class="box-title">数据总览</div>
+                <div class="preview" id="overviewPreview"></div>
+            </div>
+
+            <div id="box2" class="box">
+                <div class="box-title">时间维度数据</div>
+                <select id="timeDimension" onchange="displayTimeStats()" onclick="event.stopPropagation()">
+                    <option value="week">周统计</option>
+                    <option value="month">月统计</option>
+                    <option value="year">年统计</option>
+                </select>
+                <div id="timeContent" class="preview"></div>
+                <button class="modal-button" onclick="openModal(2)">查看详情</button>
+            </div>
+
+            <div id="box3" class="box" onclick="openModal(3)">
+                <div class="box-title">互动分析</div>
+                <div class="preview" id="interactionPreview"></div>
+            </div>
+
+            <div id="box4" class="box" onclick="openModal(4)">
+                <div class="box-title">关键词分析</div>
+                <div class="preview" id="keywordsPreview"></div>
+            </div>
+        </aside>
+
+        <!-- 右侧区域 -->
+        <section id="right">
+            <div id="mapContainer"></div>
+            <!-- 四个导航栏 -->
+            <nav id="navbar">
+                <a href="page1.html" class="nav-link">首页</a>
+                <a href="page2.html" class="nav-link">分析</a>
+                <a href="page3.html" class="nav-link">报告</a>
+                <a href="page4.html" class="nav-link">关于我们</a>
+            </nav>
+        </section>
+    </div>
+
+    <!-- 弹出窗口 (模态框) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body">
+                <!-- 模态框内容区域 -->
+            </div>
+            <div id="modal-chart" class="modal-chart"></div>
+        </div>
+    </div>
+
+    <!-- 底部版权信息 -->
+    <footer id="footer">
+        <p>© 2024 Public Opinion Management System. 版权所有.</p>
+    </footer>
+
+    <!-- 引入 JS -->
+    <script src="index.js"></script>
+</body>
+</html>

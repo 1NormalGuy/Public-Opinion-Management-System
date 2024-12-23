@@ -95,7 +95,7 @@
             padding: 20px;
             box-sizing: border-box;
             box-shadow: 0 0 20px #00e5ff;
-            min-height: 800px; /* 增加最小高度 */
+            min-height: 1000px; /* 增加最小高度 */
         }
         .right-panel h2 {
             margin-top: 0;
@@ -156,7 +156,7 @@
         /* 知识图谱容器 */
         .knowledge-graph-container {
             width: 100%;
-            height: 700px; /* 增加知识图谱容器的高度 */
+            height: 830px;
             background-color: #1a1a1a;
             border: 2px solid #00e5ff;
             border-radius: 10px;
@@ -164,6 +164,75 @@
             box-sizing: border-box;
             box-shadow: 0 0 20px #00e5ff;
             position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        /* 下拉框容器样式 */
+        .dropdown-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00e5ff;
+            border-radius: 5px;
+            padding: 10px;
+            max-height: 300px;
+            width: 200px;
+            overflow-y: auto;
+            box-shadow: 0 0 10px #00e5ff;
+        }
+        
+        .dropdown-toggle {
+            background-color: #00e5ff;
+            color: #000000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dropdown-toggle:hover {
+            background-color: #007acc;
+            color: #ffffff;
+        }
+        
+        .dropdown-content {
+            display: none;
+            margin-top: 5px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        
+        .dropdown-content.show {
+            display: block;
+        }
+        
+        .category-group {
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+            padding-bottom: 5px;
+        }
+        
+        .category-label {
+            color: #00e5ff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .entity-checkbox {
+            display: block;
+            color: #ffffff;
+            padding: 3px 0;
+        }
+        
+        .entity-checkbox input {
+            margin-right: 5px;
         }
         /* 细粒度情感分析部分 */
         .fine-grained-section {
@@ -310,10 +379,10 @@
             <!-- 知识图谱容器 -->
             <div class="knowledge-graph-container" id="knowledge-graph"></div>
             <!-- 示例数据放在图表下方 -->
-            <div class="sample-data">
+            <!-- <div class="sample-data">
                 <p><strong>.</strong></p>
                 <p><strong>.</strong></p>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- 事件抽取部分 -->
@@ -474,14 +543,9 @@
         // 关系抽取与知识图谱
         function renderKnowledgeGraph() {
             const container = document.getElementById('knowledge-graph');
-            container.innerHTML = ''; // 清空之前的识图谱
+            container.innerHTML = ''; // 清空之前的知识图谱
             const width = container.clientWidth;
             const height = container.clientHeight;
-            
-            // 确保容器有足够的高度
-            if (height < 400) {
-                container.style.height = '600px';
-            }
             
             const svg = d3.select(container)
                 .append("svg")
@@ -494,120 +558,258 @@
                 .enter().append("marker")
                 .attr("id", "arrow")
                 .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 20)  // 调整箭头位置
+                .attr("refX", 25)  // 调整箭头位置
                 .attr("refY", 0)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
+                .attr("markerWidth", 8)
+                .attr("markerHeight", 8)
                 .attr("orient", "auto")
                 .append("path")
                 .attr("d", "M0,-5L10,0L0,5")
-                .attr("fill", "#00e5ff");
+                .attr("fill", "#007acc");
 
+            // 添加发光效果
+            const defs = svg.append("defs");
+            const filter = defs.append("filter")
+                .attr("id", "glow")
+                .attr("x", "-50%")
+                .attr("y", "-50%")
+                .attr("width", "200%")
+                .attr("height", "200%");
+            
+            filter.append("feGaussianBlur")
+                .attr("stdDeviation", "3")  // 增加发光强度
+                .attr("result", "coloredBlur");
+            
+            const feMerge = filter.append("feMerge");
+            feMerge.append("feMergeNode")
+                .attr("in", "coloredBlur");
+            feMerge.append("feMergeNode")
+                .attr("in", "SourceGraphic");
+
+            // 定义实体类别颜色
             const categories = {
-                "人物": { color: "#1e90ff" },
-                "组织": { color: "#ff6347" },
-                "地点": { color: "#32cd32" },
-                "政策事件": { color: "#ffa500" },
-                // ...更多类别
+                "GPE": { color: "#00ffff" },      // 青色
+                "ORG": { color: "#ff69b4" },      // 粉色
+                "PERSON": { color: "#32cd32" },   // 绿色
+                "EVENT": { color: "#ffd700" },    // 金色
+                "LOC": { color: "#ff6347" },      // 珊瑚色
+                "FAC": { color: "#9370db" },      // 紫色
+                "DATE": { color: "#ff8c00" },     // 橙色
+                "TIME": { color: "#20b2aa" },     // 浅绿色
+                "CARDINAL": { color: "#ff1493" },  // 深粉色
+                "ORDINAL": { color: "#00fa9a" },  // 薄荷色
+                "MONEY": { color: "#ffa07a" },    // 浅鲑色
+                "WORK_OF_ART": { color: "#ba55d3" }, // 兰花色
+                "LAW": { color: "#f0e68c" },      // 卡其色
+                "LANGUAGE": { color: "#87ceeb" },  // 天蓝色
+                "QUANTITY": { color: "#dda0dd" }   // 梅红色
             };
+
+            // 添加渐变效果
+            const gradient = defs.append("linearGradient")
+                .attr("id", "linkGradient")
+                .attr("gradientUnits", "userSpaceOnUse");
+
+            gradient.append("stop")
+                .attr("offset", "0%")
+                .attr("stop-color", "#00e5ff");
+
+            gradient.append("stop")
+                .attr("offset", "100%")
+                .attr("stop-color", "#007acc");
+
             const simulation = d3.forceSimulation(relationshipData.nodes)
-                .force("link", d3.forceLink(relationshipData.links).id(d => d.id).distance(150))
-                .force("charge", d3.forceManyBody().strength(-300))
+                .force("link", d3.forceLink(relationshipData.links).id(d => d.id).distance(200))
+                .force("charge", d3.forceManyBody().strength(-800))  // 增加节点间斥力
+                .force("collide", d3.forceCollide().radius(80))      // 增加碰撞半径
                 .force("center", d3.forceCenter(width / 2, height / 2));
-            const link = svg.append("g")
-                .attr("class", "links")
-                .selectAll("line")
+
+            // 创建连线组
+            const linkGroup = svg.append("g").attr("class", "links");
+            
+            // 修改连线部分的代码
+            const link = linkGroup.selectAll("line")  // 改用line而不是path
                 .data(relationshipData.links)
                 .enter().append("line")
+                .attr("stroke", "url(#linkGradient)")
                 .attr("stroke-width", 2)
-                .attr("stroke", "#00e5ff")
-                .attr("marker-end", "url(#arrow)");  // 添加箭头
+                .attr("marker-end", "url(#arrow)")
+                .style("filter", "url(#glow)")
+                .style("opacity", 0.8);
+
+            // 添加关系文本背景
+            const linkText = svg.append("g")
+                .selectAll("text")
+                .data(relationshipData.links)
+                .enter().append("text")
+                .attr("text-anchor", "middle")
+                .attr("fill", "#ffffff")
+                .style("font-size", "14px")
+                .style("font-weight", "bold")
+                .style("text-shadow", "0 0 4px #000000")
+                .text(d => d.relation);
+
             const node = svg.append("g")
-                .attr("class", "nodes")
-                .selectAll("circle")
+                .selectAll("g")
                 .data(relationshipData.nodes)
-                .enter().append("circle")
-                .attr("r", 10)
-                .attr("fill", d => categories[d.category] ? categories[d.category].color : "#ffffff")
+                .enter().append("g")
                 .call(d3.drag()
                     .on("start", dragstarted)
                     .on("drag", dragged)
                     .on("end", dragended));
-            const labels = svg.append("g")
-                .attr("class", "labels")
-                .selectAll("text")
-                .data(relationshipData.nodes)
-                .enter().append("text")
-                .attr("dy", -15)
-                .attr("text-anchor", "middle")
-                .attr("fill", "#00e5ff")
-                .text(d => d.id);
-            // 添加关系标签
-            const linkLabels = svg.append("g")
-                .attr("class", "link-labels")
-                .selectAll("text")
-                .data(relationshipData.links)
-                .enter().append("text")
-                .attr("dy", -5)
-                .attr("text-anchor", "middle")
-                .attr("fill", "#00e5ff")
-                .text(d => d.relation);
-            // 实现可勾选实体来显示或隐藏
-            const checkboxesContainer = document.createElement('div');
-            checkboxesContainer.style.marginTop = '10px';
-            relationshipData.nodes.forEach(node => {
-                const label = document.createElement('label');
-                label.style.marginRight = '10px';
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = true;
-                checkbox.value = node.id;
-                checkbox.addEventListener('change', () => {
-                    const checkedEntities = Array.from(document.querySelectorAll('#knowledge-graph input[type="checkbox"]:checked')).map(cb => cb.value);
-                    updateGraph(checkedEntities);
+
+            // 添加节点外圈
+            node.append("circle")
+                .attr("r", 35)  // 增大节点半径
+                .attr("fill", d => categories[d.category]?.color || "#cccccc")
+                .style("filter", "url(#glow)")
+                .style("stroke", "#ffffff")
+                .style("stroke-width", "3px")
+                .style("stroke-opacity", 0.8)
+                .style("cursor", "pointer")
+                .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("r", 40)  // 悬停时放大
+                        .style("stroke-width", "4px");
+                })
+                .on("mouseout", function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("r", 35)
+                        .style("stroke-width", "3px");
                 });
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(` ${node.id}`));
-                checkboxesContainer.appendChild(label);
-            });
-            container.appendChild(checkboxesContainer);
-            function updateGraph(checkedEntities) {
-                // 过滤节点和链接
-                const filteredLinks = relationshipData.links.filter(link => checkedEntities.includes(link.source) && checkedEntities.includes(link.target));
-                const filteredNodes = relationshipData.nodes.filter(node => checkedEntities.includes(node.id));
-                // 更新链接
-                link.data(filteredLinks)
-                    .attr("stroke", "#00e5ff")
-                    .attr("stroke-width", 2)
-                    .exit().remove();
-                // 更新节点
-                node.data(filteredNodes, d => d.id)
-                    .attr("fill", d => categories[d.category] ? categories[d.category].color : "#ffffff")
-                    .exit().remove();
-                // 更新标签
-                labels.data(filteredNodes, d => d.id)
-                    .text(d => d.id)
-                    .exit().remove();
-                simulation.nodes(filteredNodes);
-                simulation.force("link").links(filteredLinks);
-                simulation.alpha(1).restart();
-            }
+
+            // 修改节点文本部分的代码
+            node.append("text")
+                .attr("dy", ".35em")  // 将文本垂直居中
+                .attr("text-anchor", "middle")
+                .attr("fill", "#000000")  // 改为黑色文字以便在彩色背景上更清晰
+                .style("font-size", "12px")  // 适当减小字体大小以适应圆圈
+                .style("font-weight", "bold")
+                .style("pointer-events", "none")  // 防止文本干扰鼠标事件
+                .text(d => d.id);
+
             simulation.on("tick", () => {
+                // 更新直线连接
                 link
                     .attr("x1", d => d.source.x)
                     .attr("y1", d => d.source.y)
                     .attr("x2", d => d.target.x)
                     .attr("y2", d => d.target.y);
-                node
-                    .attr("cx", d => d.x)
-                    .attr("cy", d => d.y);
-                labels
-                    .attr("x", d => d.x)
-                    .attr("y", d => d.y);
-                linkLabels
+
+                linkText
                     .attr("x", d => (d.source.x + d.target.x) / 2)
-                    .attr("y", d => (d.source.y + d.target.y) / 2);
+                    .attr("y", d => (d.source.y + d.target.y) / 2 - 10);
+
+                node
+                    .attr("transform", d => `translate(${d.x},${d.y})`);
             });
+
+            // 创建下拉框容器
+            const dropdownContainer = document.createElement('div');
+            dropdownContainer.className = 'dropdown-container';
+            
+            // 创建下拉框按钮
+            const dropdownToggle = document.createElement('button');
+            dropdownToggle.className = 'dropdown-toggle';
+            dropdownToggle.innerHTML = '实体筛选 <i class="fas fa-chevron-down"></i>';
+            dropdownContainer.appendChild(dropdownToggle);
+            
+            // 创建下拉内容容器
+            const dropdownContent = document.createElement('div');
+            dropdownContent.className = 'dropdown-content';
+            
+            // 切换下拉框显示/隐藏
+            dropdownToggle.addEventListener('click', () => {
+                dropdownContent.classList.toggle('show');
+                const icon = dropdownToggle.querySelector('i');
+                icon.className = dropdownContent.classList.contains('show') ? 
+                    'fas fa-chevron-up' : 'fas fa-chevron-down';
+            });
+            
+            // 按类别对节点进行分组
+            const nodesByCategory = {};
+            relationshipData.nodes.forEach(node => {
+                if (!nodesByCategory[node.category]) {
+                    nodesByCategory[node.category] = [];
+                }
+                nodesByCategory[node.category].push(node);
+            });
+            
+            // 为每个类别创建一个分组
+            Object.entries(nodesByCategory).forEach(([category, nodes]) => {
+                const categoryGroup = document.createElement('div');
+                categoryGroup.className = 'category-group';
+                
+                const categoryLabel = document.createElement('div');
+                categoryLabel.className = 'category-label';
+                categoryLabel.textContent = category;
+                categoryLabel.style.color = categories[category]?.color || '#00e5ff';
+                categoryGroup.appendChild(categoryLabel);
+                
+                nodes.forEach(node => {
+                    const label = document.createElement('label');
+                    label.className = 'entity-checkbox';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = true;
+                    checkbox.value = node.id;
+                    
+                    checkbox.addEventListener('change', () => {
+                        const checkedEntities = Array.from(
+                            dropdownContent.querySelectorAll('input[type="checkbox"]:checked')
+                        ).map(cb => cb.value);
+                        updateGraph(checkedEntities);
+                    });
+                    
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(node.id));
+                    categoryGroup.appendChild(label);
+                });
+                
+                dropdownContent.appendChild(categoryGroup);
+            });
+            
+            dropdownContainer.appendChild(dropdownContent);
+            container.appendChild(dropdownContainer);
+            
+            // 更新图谱的函数
+            function updateGraph(checkedEntities) {
+                // 过滤节点和连接
+                const filteredNodes = relationshipData.nodes.filter(node => 
+                    checkedEntities.includes(node.id)
+                );
+                const filteredLinks = relationshipData.links.filter(link => 
+                    checkedEntities.includes(link.source.id || link.source) && 
+                    checkedEntities.includes(link.target.id || link.target)
+                );
+                
+                // 更新连接
+                const linkSelection = svg.selectAll("line")
+                    .data(filteredLinks, d => `${d.source.id || d.source}-${d.target.id || d.target}`);
+                
+                linkSelection.exit().remove();
+                
+                // 更新连接文本
+                const linkTextSelection = svg.selectAll("text")
+                    .data(filteredLinks, d => `${d.source.id || d.source}-${d.target.id || d.target}`);
+                
+                linkTextSelection.exit().remove();
+                
+                // 更新节点
+                const nodeSelection = node.data(filteredNodes, d => d.id);
+                nodeSelection.exit().remove();
+                
+                // 更新模拟器
+                simulation.nodes(filteredNodes);
+                simulation.force("link").links(filteredLinks);
+                simulation.alpha(1).restart();
+            }
+
             function dragstarted(event, d) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
                 d.fx = d.x;
@@ -1015,7 +1217,7 @@
                 showBtn.classList.remove('active');
             });
         }
-        // 模态框���制函数
+        // 模态框控制函数
         function openModal(content) {
             const modal = document.getElementById("modal");
             const modalBody = document.getElementById("modal-body");

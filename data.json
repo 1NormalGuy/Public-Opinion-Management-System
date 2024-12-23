@@ -1,0 +1,42 @@
+{
+    "entityData": [
+        { "category": "人物", "name": "张艺兴", "frequency": 15 },
+        { "category": "组织", "name": "苹果公司", "frequency": 10 },
+        { "category": "地点", "name": "北京", "frequency": 8 }
+    ],
+    "relationshipData": {
+        "nodes": [
+            { "id": "张艺兴", "category": "人物" },
+            { "id": "苹果公司", "category": "组织" },
+            { "id": "北京", "category": "地点" },
+            { "id": "政策", "category": "政策事件" }
+        ],
+        "links": [
+            { "source": "张艺兴", "target": "苹果公司", "relation": "隶属于" },
+            { "source": "苹果公司", "target": "北京", "relation": "总部位于" },
+            { "source": "政策", "target": "北京", "relation": "发布于" }
+        ]
+    },
+    "eventData": [
+        {
+            "name": "iPhone发布会",
+            "type": "科技事件",
+            "description": "苹果公司发布最新款iPhone手机，展示新功能和设计。",
+            "entities": ["苹果公司", "张艺兴", "北京"]
+        },
+        {
+            "name": "政策调整",
+            "type": "政策事件",
+            "description": "政府对互联网监管政策进行重大调整，影响行业发展。",
+            "entities": ["政策", "北京"]
+        }
+    ],
+    "eventHeatData": {
+        "iPhone发布会": [50, 60, 70, 80, 90, 100, 110, 120],
+        "政策调整": [80, 75, 70, 65, 60, 55, 50, 45]
+    },
+    "eventSentimentData": {
+        "iPhone发布会": { "positive": 70, "negative": 20, "neutral": 10 },
+        "政策调整": { "positive": 30, "negative": 50, "neutral": 20 }
+    }
+}

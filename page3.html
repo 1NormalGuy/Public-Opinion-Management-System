@@ -338,30 +338,20 @@
     </div>
     <!-- 自定义脚本 -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 从 data.json 加载数据
-            fetch("data.json")
-                .then(response => response.json())
-                .then(data => {
-                    // 从 JSON 文件中加载各类数据
-                    const entityData = data.entityData;
-                    const relationshipData = data.relationshipData;
-                    const eventData = data.eventData;
-                    const eventHeatData = data.eventHeatData;
-                    const eventSentimentData = data.eventSentimentData;
-        
-                    // 渲染页面各个部分
-                    renderEntityTable(entityData);
-                    renderKnowledgeGraph(relationshipData);
-                    renderEventHeatChart(eventHeatData, eventData);
-                    renderEventSentimentChart(eventSentimentData, eventData);
-        
-                    // 绑定按钮事件
-                    attachButtonEvents();
-                })
-                .catch(error => {
-                    console.error("加载 JSON 数据失败:", error);
-                });
+        // 从 data.json 加载数据
+        fetch("data.json")
+            .then(response => response.json())
+            .then(data => {
+                // 从 JSON 文件中加载各类数据
+                const entityData = data.entityData;
+                const relationshipData = data.relationshipData;
+                const eventData = data.eventData;
+                const eventHeatData = data.eventHeatData;
+                const eventSentimentData = data.eventSentimentData;
+            })
+            .catch(error => {
+                console.error("加载 JSON 数据失败:", error);
+            });
         });
 
         // 初始化页面

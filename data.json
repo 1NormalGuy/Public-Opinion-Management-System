@@ -6,7 +6,7 @@
     ],
     "relationshipData": {
         "nodes": [
-            { "id": "张艺兴", "category": "人物" },
+            { "id": "张艺", "category": "人物" },
             { "id": "苹果公司", "category": "组织" },
             { "id": "北京", "category": "地点" },
             { "id": "政策", "category": "政策事件" }

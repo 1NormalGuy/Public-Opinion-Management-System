@@ -1,4 +1,4 @@
-/* 整体布局 */
+/* 全局样式 */
 body {
     margin: 0;
     height: 100vh;
@@ -29,7 +29,7 @@ body {
 #main-container {
     display: flex;
     flex: 1;
-    height: calc(100vh - 60px - 40px); /* 减去标题横栏和底部高度 */
+    height: calc(100vh - 60px - 80px); /* 减去标题横栏和底部导航高度 */
 }
 
 /* 左侧区域 */
@@ -56,7 +56,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* 中心对齐 */
     margin: 10px 0;
     height: 150px;
     position: relative;
@@ -64,44 +64,8 @@ body {
 
 .box-title {
     font-weight: bold;
-    margin-bottom: 10px;
     text-shadow: 0 0 5px #00e5ff;
-}
-
-.box select {
-    background: transparent;
-    border: 1px solid #00e5ff;
-    color: #00e5ff;
-    font-size: 14px;
-    margin-top: 5px;
-    outline: none;
-    border-radius: 5px;
-    padding: 5px;
-    width: 80%;
-}
-
-.preview {
-    font-size: 12px;
-    margin-top: 5px;
-    color: #00e5ff;
-    text-align: left;
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.modal-button {
-    background: #00e5ff;
-    border: none;
-    color: #0b0e17;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s;
-}
-
-.modal-button:hover {
-    background: #00bcd4;
+    font-size: 16px;
 }
 
 /* 鼠标悬停效果 */
@@ -123,34 +87,95 @@ body {
     box-sizing: border-box;
 }
 
+/* 内容包装器：地图和词云图并排 */
+#contentWrapper {
+    display: flex;
+    width: 100%;
+    height: 80%;
+    gap: 20px;
+}
+
 /* 地图容器 */
 #mapContainer {
-    width: 100%;
+    width: 60%;
     height: 100%;
     border: 2px solid #00e5ff;
     border-radius: 10px;
     box-sizing: border-box;
 }
 
-/* 导航栏 */
-#navbar {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #00e5ff;
-    padding: 10px 20px;
-    background: linear-gradient(145deg, #101826, #16283b);
-    border: 1px solid #00e5ff;
+/* 词云图容器样式 */
+#wordCloudContainer {
+    width: 40%;
+    height: 100%;
+    border: 2px solid #00e5ff;
     border-radius: 10px;
-    transition: background 0.3s, transform 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden; /* 确保嵌入内容不溢出 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav-link:hover {
+/* 切换按钮样式 */
+#toggleLanguageBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 229, 255, 0.8);
+    border: none;
+    color: #0b0e17;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.3s;
+    z-index: 10; /* 确保按钮位于词云之上 */
+}
+
+#toggleLanguageBtn:hover {
+    background: rgba(0, 188, 212, 0.8);
+    transform: scale(1.05);
+}
+
+/* 词云 iframe 和 img 样式 */
+#wordCloudContainer iframe,
+#wordCloudContainer noscript img {
+    width: 90%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    object-fit: cover; /* 确保内容适应容器 */
+}
+
+/* 页面底部导航链接 */
+#bottom-nav {
+    display: flex;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.9);
+    border-top: 1px solid #00bcd4;
+    box-sizing: border-box;
+}
+
+.bottom-nav-box {
+    flex: 1;
+    padding: 15px 0;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(145deg, #101826, #16283b);
+    border-right: 1px solid #00e5ff;
+    color: #00e5ff;
+    transition: background 0.3s, transform 0.3s;
+    width: 25%; /* 每个盒子占25%宽度 */
+}
+
+.bottom-nav-box:last-child {
+    border-right: none;
+}
+
+.bottom-nav-box:hover {
     background: #00bcd4;
     transform: scale(1.05);
 }
@@ -183,12 +208,7 @@ body {
     align-items: center;
 }
 
-.modal-content h3 {
-    margin-top: 0;
-    text-align: center;
-    text-shadow: 0 0 5px #00e5ff;
-}
-
+/* 模态框关闭按钮 */
 .close {
     color: #00e5ff;
     align-self: flex-end;
@@ -204,7 +224,7 @@ body {
 
 /* 模态框中的图表 */
 .modal-chart {
-    width: 80%;
+    width: 100%;
     height: 400px;
     margin-top: 20px;
 }
@@ -221,20 +241,6 @@ body {
     margin: 0;
     font-size: 14px;
     color: #00e5ff;
-}
-
-/* 滚动条样式 */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #00e5ff;
-    border-radius: 4px;
 }
 
 /* 响应式设计 */
@@ -258,7 +264,12 @@ body {
 
     #right {
         width: 100%;
-        height: calc(100vh - 60px - 40px - 200px); /* 减去标题、底部和左侧高度 */
+        height: calc(100vh - 60px - 80px - 200px); /* 减去标题、底部导航和左侧高度 */
+    }
+
+    #contentWrapper {
+        flex-direction: column;
+        height: 60%;
     }
 
     #mapContainer {
@@ -266,14 +277,44 @@ body {
         height: 60%;
     }
 
-    #navbar {
-        flex-wrap: wrap;
-        gap: 10px;
+    /* 词云图容器样式 */
+    #wordCloudContainer {
+        width: 600px;
+        height: 400px;
+        border: 2px solid #00e5ff;
+        border-radius: 10px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
     }
 
-    .nav-link {
-        padding: 8px 16px;
-        font-size: 14px;
+    #wordCloudContainer iframe,
+    #wordCloudContainer noscript img {
+        width: 90%;
+        height: 100%;
+        border: none;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    #toggleLanguageBtn {
+        top: 5px;
+        right: 5px;
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    #bottom-nav {
+        flex-wrap: wrap;
+    }
+
+    .bottom-nav-box {
+        flex: 0 0 48%;
+        margin: 1%;
     }
 
     /* 模态框调整 */
@@ -284,4 +325,300 @@ body {
     .modal-chart {
         height: 300px;
     }
+
+    /* 互动分析模态框头部样式 */
+    .modal-content .modal-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+        background: linear-gradient(145deg, #101826, #16283b);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px #00e5ff;
+        color: #00e5ff;
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .modal-content .modal-header h3 {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .modal-content .modal-header .refresh-button {
+        background: #00e5ff;
+        border: none;
+        color: #0b0e17;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.3s;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .modal-content .modal-header .refresh-button:hover {
+        background: #00bcd4;
+        transform: scale(1.05);
+    }
+
+    /* 互动文字内容样式 */
+    #interactionTextPreview p {
+        margin: 10px 0;
+        line-height: 1.5;
+        font-size: 14px;
+        color: #00e5ff;
+    }
+
+    /* 关键词分析容器样式 */
+    .keywords-chart-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .keywords-section {
+        width: 45%;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .keywords-section .keyword-item {
+        display: flex;
+        flex-wrap:wrap;
+        background: #16283b;
+        border: 1px solid #00e5ff;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .keywords-section .keyword-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 15px #00e5ff;
+    }
+
+    .keywords-section .keyword {
+        font-size: 16px;
+        font-weight: bold;
+        color: #00e5ff;
+        text-shadow: 0 0 5px #00e5ff;
+    }
+
+    .keywords-section .f {
+        font-size: 14px;
+        color: #00e5ff;
+    }
+
+    .chart-section {
+        width: 50%;
+        height: 400px;
+    }
+
+    /* 刷新按钮样式 */
+    .refresh-button {
+        background: #00e5ff;
+        border: none;
+        color: #0b0e17;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.3s;
+        /* 移除宽度限制以适应同一行 */
+        height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .refresh-button:hover {
+        background: #00bcd4;
+        transform: scale(1.05);
+    }
+
+    /* 互动分析模态框头部样式 */
+    .modal-content .modal-header.interaction-analysis-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* 关键词分析模态框头部样式 */
+    .modal-content .modal-header.keyword-analysis-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 数据总览样式 */
+    .modal-body.overview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding: 20px;
+        background: rgba(15, 23, 42, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 15px #00e5ff;
+        color: #00e5ff;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* 时间维度数据样式 */
+    .modal-body.time-stats {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+        gap: 15px;
+        background: rgba(15, 23, 42, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 15px #00bcd4;
+        color: #00e5ff;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* 互动分析样式 */
+    .modal-body.interaction-analysis {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+        gap: 20px;
+        background: rgba(15, 23, 42, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00e5ff;
+        color: #00e5ff;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* 关键词分析样式 */
+    .modal-body.keyword-analysis {
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+        gap: 20px;
+        background: rgba(15, 23, 42, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00e5ff;
+        color: #00e5ff;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .modal-body.keyword-analysis .keywords-chart-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .modal-body.keyword-analysis .keywords-section {
+        width: 45%;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .modal-body.keyword-analysis .keywords-section .keyword-item {
+        background: #16283b;
+        border: 1px solid #00e5ff;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .modal-body.keyword-analysis .keywords-section .keyword-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 15px #00e5ff;
+    }
+
+    .modal-body.keyword-analysis .keywords-section .keyword {
+        font-size: 16px;
+        font-weight: bold;
+        color: #00e5ff;
+        text-shadow: 0 0 5px #00e5ff;
+    }
+
+    .modal-body.keyword-analysis .keywords-section .f {
+        font-size: 14px;
+        color: #00e5ff;
+    }
+
+    .modal-body.keyword-analysis .chart-section {
+        width: 400px;
+        height: 400px;
+    }
+
+    /* 保持滚动条样式一致 */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #00e5ff;
+        border-radius: 4px;
+    }
+}
+
+.modal-body.keyword-analysis .refresh-button {
+    align-self: flex-end; /* 将刷新按钮对齐到右上角 */
+    margin-bottom: 10px; /* 添加下边距 */
+}
+
+/* 加载界面样式 */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(11, 14, 23, 0.8); /* 半透明背景 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000; /* 确保加载界面在最上层 */
+    visibility: hidden; /* 默认隐藏 */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 显示加载界面 */
+#loading-screen.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 圆形进度条样式 */
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 8px solid #00e5ff;
+    border-top: 8px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 旋转动画 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

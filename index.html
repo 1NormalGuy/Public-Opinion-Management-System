@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public Opinion Management System</title>
+    <title>舆情管理系统</title>
     <!-- 引入 CSS -->
     <link rel="stylesheet" href="index.css">
     <!-- 引入 ECharts 主文件 -->
@@ -14,8 +14,12 @@
 <body>
     <!-- 顶部标题横栏 -->
     <header id="header">
-        <h1>舆情数据管理系统</h1>
+        <h1>舆情管理系统</h1>
     </header>
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
 
     <!-- 主容器 -->
     <div id="main-container">
@@ -23,41 +27,39 @@
         <aside id="left">
             <div id="box1" class="box" onclick="openModal(1)">
                 <div class="box-title">数据总览</div>
-                <div class="preview" id="overviewPreview"></div>
+                <!-- 移除预览内容 -->
             </div>
 
-            <div id="box2" class="box">
+            <div id="box2" class="box" onclick="openModal(2)">
                 <div class="box-title">时间维度数据</div>
-                <select id="timeDimension" onchange="displayTimeStats()" onclick="event.stopPropagation()">
-                    <option value="week">周统计</option>
-                    <option value="month">月统计</option>
-                    <option value="year">年统计</option>
-                </select>
-                <div id="timeContent" class="preview"></div>
-                <button class="modal-button" onclick="openModal(2)">查看详情</button>
+                <!-- 移除预览内容 -->
             </div>
 
             <div id="box3" class="box" onclick="openModal(3)">
                 <div class="box-title">互动分析</div>
-                <div class="preview" id="interactionPreview"></div>
+                <!-- 移除预览内容 -->
             </div>
 
             <div id="box4" class="box" onclick="openModal(4)">
                 <div class="box-title">关键词分析</div>
-                <div class="preview" id="keywordsPreview"></div>
+                <!-- 移除预览内容 -->
             </div>
         </aside>
 
         <!-- 右侧区域 -->
         <section id="right">
-            <div id="mapContainer"></div>
-            <!-- 四个导航栏 -->
-            <nav id="navbar">
-                <a href="page1.html" class="nav-link">首页</a>
-                <a href="page2.html" class="nav-link">分析</a>
-                <a href="page3.html" class="nav-link">报告</a>
-                <a href="page4.html" class="nav-link">关于我们</a>
-            </nav>
+            <div id="contentWrapper">
+                <div id="mapContainer"></div>
+                <div id="wordCloudContainer">
+                    <!-- 切换按钮 -->
+                    <button id="toggleLanguageBtn" onclick="toggleWordCloud()">切换到英文词云</button>
+                    <!-- 词云嵌入 -->
+                    <iframe id="wordCloudIframe" src="https://public.flourish.studio/visualisation/20916338/embed" frameborder="0" scrolling="no" style="width:90%; height:100%; border:none;"></iframe>
+                    <noscript>
+                        <img id="wordCloudImage" src="https://public.flourish.studio/visualisation/20916338/thumbnail" alt="word-cloud visualization" style="width:90%; height:100%; border-radius:10px;">
+                    </noscript>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -72,12 +74,23 @@
         </div>
     </div>
 
+    <!-- 页面底部导航链接 -->
+    <!-- 页面底部导航链接 -->
+<div id="bottom-nav">
+    <div class="bottom-nav-box" onclick="navigateTo('page1.html')">话题分析</div>
+    <div class="bottom-nav-box" onclick="navigateTo('page2.html')">情感分析</div>
+    <div class="bottom-nav-box" onclick="navigateTo('page3.html')">事件抽取</div>
+    <div class="bottom-nav-box" onclick="navigateTo('page4.html')">谣言检测</div>
+</div>
+
+
     <!-- 底部版权信息 -->
     <footer id="footer">
-        <p>© 2024 Public Opinion Management System. 版权所有.</p>
+        <p>© 2024 高科技数据可视化仪表板. 版权所有.</p>
     </footer>
 
     <!-- 引入 JS -->
+      <script type="text/javascript" src="./weibo_data.json"></script> 
     <script src="index.js"></script>
 </body>
 </html>

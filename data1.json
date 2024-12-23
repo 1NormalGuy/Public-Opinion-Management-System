@@ -12,7 +12,7 @@
   "智能家居": [50, 70, 90, 110, 130, 160, 180, 210],
   "机器人技术": [40, 60, 85, 110, 130, 160, 170, 200],
   "虚拟货币": [50, 80, 100, 120, 140, 170, 200, 220],
-  "边缘计算": [60, 75, 95, 115, 130, 150, 180, 210],
+  "智能计算": [60, 75, 95, 115, 130, 150, 180, 210],
   "生物技术": [65, 85, 105, 125, 150, 170, 200, 230],
   "面部识别": [45, 55, 75, 95, 110, 140, 150, 180],
   "大健康": [50, 70, 100, 130, 160, 180, 210, 240],
@@ -134,95 +134,459 @@
 },
   "tagData": {
      "社会热点事件": [
-    { "tag": "人工智能伦理", "heat": 92, "relevance": 89 },
-    { "tag": "中国经济复苏", "heat": 85, "relevance": 93 },
-    { "tag": "新能源车市场", "heat": 95, "relevance": 80 },
-    { "tag": "全球气候协议", "heat": 80, "relevance": 91 },
-    { "tag": "长赐号阻塞", "heat": 60, "relevance": 77 },
-    { "tag": "乌克兰战争", "heat": 98, "relevance": 85 },
-    { "tag": "元宇宙经济", "heat": 75, "relevance": 92 },
-    { "tag": "疫情后复工", "heat": 90, "relevance": 95 },
-    { "tag": "全球粮食危机", "heat": 85, "relevance": 88 },
-    { "tag": "数字货币监管", "heat": 80, "relevance": 94 },
-    { "tag": "TikTok禁令", "heat": 75, "relevance": 78 },
-    { "tag": "中国房地产调整", "heat": 80, "relevance": 85 },
-    { "tag": "全球电力危机", "heat": 82, "relevance": 86 },
-    { "tag": "大数据隐私", "heat": 78, "relevance": 91 },
-    { "tag": "女性领导力", "heat": 70, "relevance": 80 },
-    { "tag": "供应链危机", "heat": 80, "relevance": 88 },
-    { "tag": "全球能源转型", "heat": 85, "relevance": 90 },
-    { "tag": "气候变化政策", "heat": 80, "relevance": 87 },
-    { "tag": "人工智能监管", "heat": 87, "relevance": 91 },
-    { "tag": "全球疫情防控", "heat": 85, "relevance": 94 },
-    { "tag": "能源创新", "heat": 82, "relevance": 86 },
-    { "tag": "高科技行业裁员", "heat": 75, "relevance": 92 },
-    { "tag": "全球经济衰退", "heat": 88, "relevance": 85 },
-    { "tag": "碳排放减少", "heat": 90, "relevance": 93 },
-    { "tag": "数字身份认证", "heat": 80, "relevance": 79 },
-    { "tag": "TikTok数据泄露", "heat": 70, "relevance": 87 },
-    { "tag": "人工智能发展", "heat": 95, "relevance": 90 },
-    { "tag": "新兴市场投资", "heat": 78, "relevance": 92 },
-    { "tag": "社交媒体监管", "heat": 83, "relevance": 85 },
-    { "tag": "智能家居", "heat": 72, "relevance": 80 },
-    { "tag": "全球数字转型", "heat": 85, "relevance": 94 },
-    { "tag": "非洲发展", "heat": 65, "relevance": 81 },
-    { "tag": "人工智能创业", "heat": 80, "relevance": 83 },
-    { "tag": "中国科技创新", "heat": 88, "relevance": 90 },
-    { "tag": "个人隐私保护", "heat": 78, "relevance": 84 },
-    { "tag": "互联网医疗", "heat": 75, "relevance": 89 },
-    { "tag": "网络安全", "heat": 80, "relevance": 86 },
-    { "tag": "跨境电商", "heat": 85, "relevance": 92 },
-    { "tag": "全球旅行复苏", "heat": 80, "relevance": 93 },
-    { "tag": "金融科技创新", "heat": 90, "relevance": 85 },
-    { "tag": "自动驾驶汽车", "heat": 82, "relevance": 88 },
-    { "tag": "大规模抗议", "heat": 70, "relevance": 79 },
-    { "tag": "能源供应安全", "heat": 90, "relevance": 92 },
-    { "tag": "国际关系变化", "heat": 88, "relevance": 84 },
-    { "tag": "就业市场变化", "heat": 80, "relevance": 91 },
-    { "tag": "量子通信", "heat": 77, "relevance": 87 },
-    { "tag": "气候灾害", "heat": 85, "relevance": 90 },
-    { "tag": "国际贸易争端", "heat": 70, "relevance": 88 },
-    { "tag": "全球贸易流动", "heat": 75, "relevance": 93 },
-    { "tag": "机器人技术", "heat": 80, "relevance": 82 },
-    { "tag": "生物科技", "heat": 75, "relevance": 85 },
-    { "tag": "互联网审查", "heat": 78, "relevance": 79 },
-    { "tag": "全球卫生安全", "heat": 85, "relevance": 91 },
-    { "tag": "跨国公司裁员", "heat": 75, "relevance": 84 },
-    { "tag": "自动化生产", "heat": 80, "relevance": 86 },
-    { "tag": "大规模气候迁徙", "heat": 82, "relevance": 90 },
-    { "tag": "社会不平等", "heat": 80, "relevance": 85 },
-    { "tag": "人口老龄化", "heat": 85, "relevance": 92 }
+    { "tag": "人工智能伦理", "heat": 92, "relevance": 0.89 },
+    { "tag": "中国经济复苏", "heat": 85, "relevance": 0.93 },
+    { "tag": "新能源车市场", "heat": 95, "relevance": 0.80 },
+    { "tag": "全球气候协议", "heat": 80, "relevance": 0.91 },
+    { "tag": "长赐号阻塞", "heat": 60, "relevance": 0.77 },
+    { "tag": "乌克兰战争", "heat": 98, "relevance": 0.85 },
+    { "tag": "元宇宙经济", "heat": 75, "relevance": 0.92 },
+    { "tag": "疫情后复工", "heat": 90, "relevance": 0.95 },
+    { "tag": "全球粮食危机", "heat": 85, "relevance": 0.88 },
+    { "tag": "数字货币监管", "heat": 80, "relevance": 0.94 },
+    { "tag": "TikTok禁令", "heat": 75, "relevance": 0.78 },
+    { "tag": "中国房地产调整", "heat": 80, "relevance": 0.85 },
+    { "tag": "全球电力危机", "heat": 82, "relevance": 0.86 },
+    { "tag": "大数据隐私", "heat": 78, "relevance": 0.91 },
+    { "tag": "女性领导力", "heat": 70, "relevance": 0.80 },
+    { "tag": "供应链危机", "heat": 80, "relevance": 0.88 },
+    { "tag": "全球能源转型", "heat": 85, "relevance": 0.90 },
+    { "tag": "气候变化政策", "heat": 80, "relevance": 0.87 },
+    { "tag": "人工智能监管", "heat": 87, "relevance": 0.91 },
+    { "tag": "全球疫情防控", "heat": 85, "relevance": 0.94 },
+    { "tag": "能源创新", "heat": 82, "relevance": 0.86 },
+    { "tag": "高科技行业裁员", "heat": 75, "relevance": 0.92 },
+    { "tag": "全球经济衰退", "heat": 88, "relevance": 0.85 },
+    { "tag": "碳排放减少", "heat": 90, "relevance": 0.93 },
+    { "tag": "数字身份认证", "heat": 80, "relevance": 0.79 },
+    { "tag": "TikTok数据泄露", "heat": 70, "relevance": 0.87 },
+    { "tag": "人工智能发展", "heat": 95, "relevance": 0.90 },
+    { "tag": "新兴市场投资", "heat": 78, "relevance": 0.92 },
+    { "tag": "社交媒体监管", "heat": 83, "relevance": 0.85 },
+    { "tag": "智能家居", "heat": 72, "relevance": 0.80 },
+    { "tag": "全球数字转型", "heat": 85, "relevance": 0.94 },
+    { "tag": "非洲发展", "heat": 65, "relevance": 0.81 },
+    { "tag": "人工智能创业", "heat": 80, "relevance": 0.83 },
+    { "tag": "中国科技创新", "heat": 88, "relevance": 0.90 },
+    { "tag": "个人隐私保护", "heat": 78, "relevance": 0.84 },
+    { "tag": "互联网医疗", "heat": 75, "relevance": 0.89 },
+    { "tag": "网络安全", "heat": 80, "relevance": 0.86 },
+    { "tag": "跨境电商", "heat": 85, "relevance": 0.92 },
+    { "tag": "全球旅行复苏", "heat": 80, "relevance": 0.93 },
+    { "tag": "金融科技创新", "heat": 90, "relevance": 0.85 },
+    { "tag": "自动驾驶汽车", "heat": 82, "relevance": 0.88 },
+    { "tag": "大规模抗议", "heat": 70, "relevance": 0.79 },
+    { "tag": "能源供应安全", "heat": 90, "relevance": 0.92 },
+    { "tag": "国际关系变化", "heat": 88, "relevance": 0.84 },
+    { "tag": "就业市场变化", "heat": 80, "relevance": 0.91 },
+    { "tag": "量子通信", "heat": 77, "relevance": 0.87 },
+    { "tag": "气候灾害", "heat": 85, "relevance": 0.90 },
+    { "tag": "国际贸易争端", "heat": 70, "relevance": 0.88 },
+    { "tag": "全球贸易流动", "heat": 75, "relevance": 0.93 },
+    { "tag": "机器人技术", "heat": 80, "relevance": 0.82 },
+    { "tag": "生物科技", "heat": 75, "relevance": 0.85 },
+    { "tag": "互联网审查", "heat": 78, "relevance": 0.79 },
+    { "tag": "全球卫生安全", "heat": 85, "relevance": 0.91 },
+    { "tag": "跨国公司裁员", "heat": 75, "relevance": 0.84 },
+    { "tag": "自动化生产", "heat": 80, "relevance": 0.86 },
+    { "tag": "大规模气候迁徙", "heat": 82, "relevance": 0.90 },
+    { "tag": "社会不平等", "heat": 80, "relevance": 0.85 },
+    { "tag": "人口老龄化", "heat": 85, "relevance": 0.92 }
   ],
-    "娱乐与文化事件": [
-        { "tag": "明星绯闻", "heat": 1100, "relevance": 0.92 },
-        { "tag": "电影发布", "heat": 1000, "relevance": 0.88 },
-        { "tag": "音乐节", "heat": 850, "relevance": 0.84 },
-        { "tag": "文化展览", "heat": 650, "relevance": 0.80 }
-    ],
+    "娱乐与文化事件":  [
+    {
+      "tag": "奥斯卡奖",
+      "heat": 85,
+      "relevance": 0.92
+    },
+    {
+      "tag": "超级碗",
+      "heat": 90,
+      "relevance": 0.89
+    },
+    {
+      "tag": "电影《黑豹》续集",
+      "heat": 95,
+      "relevance": 0.88
+    },
+    {
+      "tag": "刘德华演唱会",
+      "heat": 87,
+      "relevance": 0.91
+    },
+    {
+      "tag": "流行歌手新专辑发布",
+      "heat": 80,
+      "relevance": 0.9
+    },
+    {
+      "tag": "东京奥运会闭幕式",
+      "heat": 92,
+      "relevance": 0.85
+    },
+    {
+      "tag": "巴黎时装周",
+      "heat": 88,
+      "relevance": 0.93
+    },
+    {
+      "tag": "梅西转会事件",
+      "heat": 95,
+      "relevance": 0.86
+    },
+    {
+      "tag": "米哈伊尔·巴里什尼科夫演出",
+      "heat": 75,
+      "relevance": 0.88
+    },
+    {
+      "tag": "虚拟偶像崛起",
+      "heat": 90,
+      "relevance": 0.91
+    },
+    {
+      "tag": "中国网络文学走向海外",
+      "heat": 85,
+      "relevance": 0.8
+    },
+    {
+      "tag": "蔡徐坤全球巡演",
+      "heat": 87,
+      "relevance": 0.85
+    },
+    {
+      "tag": "热门电影《阿凡达》再上映",
+      "heat": 93,
+      "relevance": 0.87
+    },
+    {
+      "tag": "红毯明星穿搭",
+      "heat": 80,
+      "relevance": 0.89
+    },
+    {
+      "tag": "Netflix独家剧集",
+      "heat": 88,
+      "relevance": 0.84
+    },
+    {
+      "tag": "喜剧演员脱口秀",
+      "heat": 85,
+      "relevance": 0.8
+    },
+    {
+      "tag": "2024年奥运会筹备",
+      "heat": 92,
+      "relevance": 0.91
+    },
+    {
+      "tag": "莎士比亚经典剧目上演",
+      "heat": 75,
+      "relevance": 0.83
+    },
+    {
+      "tag": "国际电影节获奖作品",
+      "heat": 89,
+      "relevance": 0.9
+    },
+    {
+      "tag": "流行舞蹈挑战",
+      "heat": 80,
+      "relevance": 0.88
+    },
+    {
+      "tag": "电竞大赛直播",
+      "heat": 93,
+      "relevance": 0.95
+    },
+    {
+      "tag": "戏剧艺术奖",
+      "heat": 78,
+      "relevance": 0.86
+    },
+    {
+      "tag": "摇滚音乐节",
+      "heat": 85,
+      "relevance": 0.89
+    },
+    {
+      "tag": "书籍畅销榜",
+      "heat": 80,
+      "relevance": 0.84
+    },
+    {
+      "tag": "综艺节目收视率",
+      "heat": 86,
+      "relevance": 0.9
+    },
+    {
+      "tag": "时尚博主流行趋势",
+      "heat": 92,
+      "relevance": 0.88
+    },
+    {
+      "tag": "明星社交平台动态",
+      "heat": 90,
+      "relevance": 0.87
+    },
+    {
+      "tag": "跨界合作品牌",
+      "heat": 85,
+      "relevance": 0.89
+    },
+    {
+      "tag": "新电影上映",
+      "heat": 92,
+      "relevance": 0.93
+    },
+    {
+      "tag": "奥斯卡提名名单",
+      "heat": 87,
+      "relevance": 0.91
+    },
+    {
+      "tag": "舞蹈挑战视频",
+      "heat": 83,
+      "relevance": 0.8
+    },
+    {
+      "tag": "AI生成艺术展览",
+      "heat": 75,
+      "relevance": 0.85
+    },
+    {
+      "tag": "全球最佳剧本奖",
+      "heat": 88,
+      "relevance": 0.82
+    },
+    {
+      "tag": "虚拟现实音乐会",
+      "heat": 90,
+      "relevance": 0.88
+    },
+    {
+      "tag": "舞台剧重演经典",
+      "heat": 80,
+      "relevance": 0.91
+    },
+    {
+      "tag": "独立电影发行",
+      "heat": 79,
+      "relevance": 0.85
+    },
+    {
+      "tag": "网络综艺节目",
+      "heat": 83,
+      "relevance": 0.87
+    },
+    {
+      "tag": "明星代言品牌",
+      "heat": 95,
+      "relevance": 0.9
+    },
+    {
+      "tag": "户外音乐节",
+      "heat": 90,
+      "relevance": 0.92
+    },
+    {
+      "tag": "全球流行文化趋势",
+      "heat": 80,
+      "relevance": 0.85
+    },
+    {
+      "tag": "TikTok挑战",
+      "heat": 87,
+      "relevance": 0.93
+    },
+    {
+      "tag": "街头艺术展",
+      "heat": 82,
+      "relevance": 0.88
+    },
+    {
+      "tag": "经典歌手重返舞台",
+      "heat": 85,
+      "relevance": 0.9
+    },
+    {
+      "tag": "世界文学奖",
+      "heat": 75,
+      "relevance": 0.8
+    },
+    {
+      "tag": "VR影院体验",
+      "heat": 80,
+      "relevance": 0.87
+    },
+    {
+      "tag": "电竞明星转型",
+      "heat": 89,
+      "relevance": 0.92
+    },
+    {
+      "tag": "新剧播出",
+      "heat": 85,
+      "relevance": 0.84
+    },
+    {
+      "tag": "综艺节目嘉宾",
+      "heat": 92,
+      "relevance": 0.9
+    },
+    {
+      "tag": "全球热播电视剧",
+      "heat": 93,
+      "relevance": 0.88
+    },
+    {
+      "tag": "全球音乐排行榜",
+      "heat": 80,
+      "relevance": 0.89
+    },
+    {
+      "tag": "国际艺术博览会",
+      "heat": 75,
+      "relevance": 0.86
+    },
+    {
+      "tag": "文化交流活动",
+      "heat": 87,
+      "relevance": 0.84
+    },
+    {
+      "tag": "街头文化潮流",
+      "heat": 83,
+      "relevance": 0.92
+    },
+    {
+      "tag": "音乐奖项提名",
+      "heat": 80,
+      "relevance": 0.89
+    },
+    {
+      "tag": "全球电影票房",
+      "heat": 90,
+      "relevance": 0.9
+    }
+  ],
     "政治与政策相关事件": [
-        { "tag": "新政策发布", "heat": 1300, "relevance": 0.98 },
-        { "tag": "选举", "heat": 1150, "relevance": 0.93 },
-        { "tag": "外交关系", "heat": 800, "relevance": 0.85 },
-        { "tag": "法律修订", "heat": 700, "relevance": 0.80 }
-    ],
-    "科技与创新": [
-        { "tag": "人工智能", "heat": 900, "relevance": 0.89 },
-        { "tag": "区块链", "heat": 800, "relevance": 0.85 },
-        { "tag": "可再生能源", "heat": 750, "relevance": 0.82 },
-        { "tag": "5G技术", "heat": 600, "relevance": 0.78 }
-    ]
+    { "tag": "气候变化政策", "heat": 90, "relevance": 0.94 },
+    { "tag": "全球贸易政策", "heat": 85, "relevance": 0.92 },
+    { "tag": "中国房地产调控政策", "heat": 95, "relevance": 0.88 },
+    { "tag": "美国基建投资计划", "heat": 92, "relevance": 0.9 },
+    { "tag": "欧洲碳排放交易体系", "heat": 88, "relevance": 0.85 },
+    { "tag": "中美贸易战", "heat": 98, "relevance": 0.92 },
+    { "tag": "中国科技创新政策", "heat": 90, "relevance": 0.93 },
+    { "tag": "国际移民政策", "heat": 80, "relevance": 0.88 },
+    { "tag": "欧盟数字税政策", "heat": 75, "relevance": 0.84 },
+    { "tag": "美国气候变化法案", "heat": 87, "relevance": 0.89 },
+    { "tag": "中国“一带一路”倡议", "heat": 95, "relevance": 0.92 },
+    { "tag": "国际粮食安全政策", "heat": 80, "relevance": 0.85 },
+    { "tag": "俄罗斯制裁政策", "heat": 90, "relevance": 0.91 },
+    { "tag": "全球碳中和目标", "heat": 85, "relevance": 0.87 },
+    { "tag": "反恐政策", "heat": 85, "relevance": 0.82 },
+    { "tag": "法国养老金改革", "heat": 78, "relevance": 0.88 },
+    { "tag": "中国人口政策", "heat": 90, "relevance": 0.93 },
+    { "tag": "美国移民政策改革", "heat": 83, "relevance": 0.87 },
+    { "tag": "印度税收改革", "heat": 77, "relevance": 0.85 },
+    { "tag": "环保法案", "heat": 80, "relevance": 0.89 },
+    { "tag": "中国国家安全法", "heat": 95, "relevance": 0.9 },
+    { "tag": "美国卫生改革", "heat": 80, "relevance": 0.84 },
+    { "tag": "全球反腐败政策", "heat": 85, "relevance": 0.88 },
+    { "tag": "数字货币监管政策", "heat": 82, "relevance": 0.91 },
+    { "tag": "全球税收改革", "heat": 80, "relevance": 0.85 },
+    { "tag": "民主与人权问题", "heat": 75, "relevance": 0.8 },
+    { "tag": "国际援助政策", "heat": 70, "relevance": 0.78 },
+    { "tag": "国家预算审查", "heat": 77, "relevance": 0.83 },
+    { "tag": "全球失业问题", "heat": 80, "relevance": 0.86 },
+    { "tag": "日本经济政策", "heat": 78, "relevance": 0.85 },
+    { "tag": "中国教育政策改革", "heat": 88, "relevance": 0.87 },
+    { "tag": "全球贫困问题", "heat": 85, "relevance": 0.89 },
+    { "tag": "美国社会保障政策", "heat": 80, "relevance": 0.84 },
+    { "tag": "国际社会公正与平等", "heat": 85, "relevance": 0.9 },
+    { "tag": "英国脱欧后贸易政策", "heat": 95, "relevance": 0.91 },
+    { "tag": "全球能源政策", "heat": 90, "relevance": 0.93 },
+    { "tag": "中国农村振兴战略", "heat": 87, "relevance": 0.92 },
+    { "tag": "全球知识产权保护", "heat": 75, "relevance": 0.8 },
+    { "tag": "国际环保协议", "heat": 80, "relevance": 0.82 },
+    { "tag": "全球金融监管改革", "heat": 85, "relevance": 0.88 },
+    { "tag": "美国教育改革", "heat": 80, "relevance": 0.85 },
+    { "tag": "全球健康危机应对", "heat": 90, "relevance": 0.92 },
+    { "tag": "中国军事改革", "heat": 88, "relevance": 0.91 },
+    { "tag": "全球化反思", "heat": 75, "relevance": 0.86 },
+    { "tag": "美国外交政策", "heat": 93, "relevance": 0.9 },
+    { "tag": "中东和平进程", "heat": 80, "relevance": 0.84 },
+    { "tag": "全球文化多样性", "heat": 75, "relevance": 0.83 },
+    { "tag": "中国与非洲合作政策", "heat": 85, "relevance": 0.88 },
+    { "tag": "全球粮食政策", "heat": 80, "relevance": 0.82 },
+    { "tag": "国际难民政策", "heat": 78, "relevance": 0.85 },
+    { "tag": "中国经济改革", "heat": 93, "relevance": 0.9 }
+  ],
+    "科技与创新":  [
+    { "tag": "量子计算", "heat": 95, "relevance": 0.92 },
+    { "tag": "人工智能", "heat": 98, "relevance": 0.9 },
+    { "tag": "区块链", "heat": 93, "relevance": 0.87 },
+    { "tag": "5G技术", "heat": 96, "relevance": 0.89 },
+    { "tag": "自动驾驶", "heat": 94, "relevance": 0.85 },
+    { "tag": "元宇宙", "heat": 92, "relevance": 0.91 },
+    { "tag": "量子通信", "heat": 89, "relevance": 0.88 },
+    { "tag": "基因编辑", "heat": 91, "relevance": 0.95 },
+    { "tag": "AI芯片", "heat": 97, "relevance": 0.84 },
+    { "tag": "深度学习", "heat": 99, "relevance": 0.93 },
+    { "tag": "物联网", "heat": 88, "relevance": 0.8 },
+    { "tag": "虚拟现实", "heat": 90, "relevance": 0.82 },
+    { "tag": "智能家居", "heat": 86, "relevance": 0.76 },
+    { "tag": "云计算", "heat": 92, "relevance": 0.77 },
+    { "tag": "生物识别技术", "heat": 85, "relevance": 0.81 },
+    { "tag": "无人机", "heat": 84, "relevance": 0.78 },
+    { "tag": "智能医疗", "heat": 80, "relevance": 0.83 },
+    { "tag": "智慧城市", "heat": 79, "relevance": 0.86 },
+    { "tag": "大数据", "heat": 93, "relevance": 0.88 },
+    { "tag": "可穿戴设备", "heat": 81, "relevance": 0.75 },
+    { "tag": "人机交互", "heat": 95, "relevance": 0.9 },
+    { "tag": "自动化", "heat": 86, "relevance": 0.79 },
+    { "tag": "边缘计算", "heat": 87, "relevance": 0.85 },
+    { "tag": "绿色能源", "heat": 82, "relevance": 0.89 },
+    { "tag": "新能源车", "heat": 91, "relevance": 0.93 },
+    { "tag": "电池技术", "heat": 83, "relevance": 0.87 },
+    { "tag": "3D打印", "heat": 94, "relevance": 0.82 },
+    { "tag": "脑机接口", "heat": 85, "relevance": 0.94 },
+    { "tag": "科技创新", "heat": 97, "relevance": 0.96 },
+    { "tag": "纳米技术", "heat": 89, "relevance": 0.9 },
+    { "tag": "超级计算机", "heat": 88, "relevance": 0.8 },
+    { "tag": "机器人技术", "heat": 92, "relevance": 0.92 },
+    { "tag": "虚拟货币", "heat": 95, "relevance": 0.83 },
+    { "tag": "大脑科学", "heat": 82, "relevance": 0.91 },
+    { "tag": "智能制造", "heat": 84, "relevance": 0.85 },
+    { "tag": "数据隐私", "heat": 93, "relevance": 0.79 },
+    { "tag": "智能交通", "heat": 87, "relevance": 0.76 },
+    { "tag": "人脸识别", "heat": 90, "relevance": 0.88 },
+    { "tag": "语音识别", "heat": 92, "relevance": 0.87 },
+    { "tag": "激光技术", "heat": 81, "relevance": 0.9 },
+    { "tag": "高性能计算", "heat": 89, "relevance": 0.82 },
+    { "tag": "基因组学", "heat": 86, "relevance": 0.94 },
+    { "tag": "量子材料", "heat": 84, "relevance": 0.83 },
+    { "tag": "云原生", "heat": 83, "relevance": 0.78 },
+    { "tag": "数字化转型", "heat": 95, "relevance": 0.8 },
+    { "tag": "智慧农业", "heat": 80, "relevance": 0.76 },
+    { "tag": "智能机器人", "heat": 96, "relevance": 0.93 },
+    { "tag": "脑科学", "heat": 91, "relevance": 0.79 },
+    { "tag": "多模态AI", "heat": 90, "relevance": 0.95 },
+    { "tag": "量子人工智能", "heat": 92, "relevance": 0.84 }
+  ]
   },
   "heatData": [
-    { "topic": "人工智能", "reposts": 1500, "comments": 1200, "participants": 800 },
-    { "topic": "区块链", "reposts": 1400, "comments": 1100, "participants": 750 },
-    { "topic": "可再生能源", "reposts": 1300, "comments": 1000, "participants": 700 },
-    { "topic": "5G技术", "reposts": 1200, "comments": 900, "participants": 650 },
-    { "topic": "虚拟现实", "reposts": 1100, "comments": 850, "participants": 600 },
-    { "topic": "人工智能技术", "reposts": 1600, "comments": 1300, "participants": 900 },
-    { "topic": "自动驾驶", "reposts": 1250, "comments": 1000, "participants": 720 },
-    { "topic": "量子计算", "reposts": 1150, "comments": 950, "participants": 680 },
+    { "topic": "人工智能", "reposts": 1501, "comments": 1223, "participants": 831 },
+    { "topic": "区块链", "reposts": 1425, "comments": 1175, "participants": 737 },
+    { "topic": "可再生能源", "reposts": 1336, "comments": 1053, "participants": 704 },
+    { "topic": "5G技术", "reposts": 1200, "comments": 901, "participants": 652 },
+    { "topic": "虚拟现实", "reposts": 1103, "comments": 852, "participants": 623 },
+    { "topic": "人工智能技术", "reposts": 1600, "comments": 1300, "participants": 98 },
+    { "topic": "自动驾驶", "reposts": 1255, "comments": 1098, "participants": 727 },
+    { "topic": "量子计算", "reposts": 1155, "comments": 943, "participants": 681 },
     { "topic": "数字货币", "reposts": 1050, "comments": 800, "participants": 630 },
-    { "topic": "智能家居", "reposts": 980, "comments": 780, "participants": 600 }
+    { "topic": "智能家居", "reposts": 984, "comments": 780, "participants": 601 }
   ]
 
 }

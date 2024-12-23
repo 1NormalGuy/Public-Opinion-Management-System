@@ -1,15 +1,89 @@
 // 示例数据
 const rumorData = {
   "confirmed": [
-      { rumor: "谣言A", source: "来源X" },
-      { rumor: "谣言B", source: "来源Y" },
-      { rumor: "谣言C", source: "来源Z" }
-  ],
+    {
+        "rumor": "手机信号塔会引发附近居民的癌症",
+        "source": "B站"
+    },
+    {
+        "rumor": "用花露水洗澡可以防止蚊虫叮咬",
+        "source": "其他论坛"
+    },
+    {
+        "rumor": "长期喝速溶咖啡会致癌",
+        "source": "其他论坛"
+    },
+    {
+        "rumor": "白发拔一根长十根",
+        "source": "贴吧"
+    },
+    {
+        "rumor": "气球放进微波炉会爆炸",
+        "source": "B站"
+    },
+    {
+        "rumor": "所有指甲油都有致癌成分",
+        "source": "B站"
+    },
+    {
+        "rumor": "用消毒剂漱口可以杀死病毒",
+        "source": "微信公众号"
+    },
+    {
+        "rumor": "含糖饮料会瞬间降低免疫力",
+        "source": "微信公众号"
+    },
+    {
+        "rumor": "多喝热水能治疗所有感冒症状",
+        "source": "贴吧"
+    },
+    {
+        "rumor": "中药材煮的时间越久越有效",
+        "source": "微博"
+    }
+],
   "pending": [
-      { rumor: "谣言D", source: "来源W" },
-      { rumor: "谣言E", source: "来源V" },
-      { rumor: "谣言F", source: "来源U" }
-  ]
+    {
+        "rumor": "核能比煤炭更危险",
+        "source": "其他自媒体平台"
+    },
+    {
+        "rumor": "海豚是人类失落的智慧种族",
+        "source": "B站"
+    },
+    {
+        "rumor": "维生素E能让皮肤更光滑",
+        "source": "贴吧"
+    },
+    {
+        "rumor": "微波炉会产生致癌辐射",
+        "source": "其他自媒体平台"
+    },
+    {
+        "rumor": "喝碳酸饮料会导致骨折",
+        "source": "其他论坛"
+    },
+    {
+        "rumor": "咖啡能“提神醒脑”，适合学生喝",
+        "source": "其他论坛"
+    },
+    {
+        "rumor": "用消毒剂漱口可以杀死病毒",
+        "source": "贴吧"
+    },
+    {
+        "rumor": "喝咖啡会让骨质疏松",
+        "source": "其他论坛"
+    },
+    {
+        "rumor": "气泡水对骨骼健康有害",
+        "source": "QQ空间"
+    },
+    {
+        "rumor": "经常晒太阳可以治抑郁",
+        "source": "微信公众号"
+    }
+]
 };
 
 const trustData = {
@@ -17,14 +91,32 @@ const trustData = {
   "自媒体": 30
 };
 
+
+
 const trustDetailedData = {
   "官方媒体": [
-      { name: "媒体1", trust: 40 },
-      { name: "媒体2", trust: 30 }
+    { "name": "新华社", "trust": 95 },
+    { "name": "人民日报", "trust": 90 },
+    { "name": "中央电视台(CCTV)", "trust": 88 },
+    { "name": "中国日报", "trust": 85 },
+    { "name": "经济日报", "trust": 83 },
+    { "name": "光明日报", "trust": 82 },
+    { "name": "环球时报", "trust": 75 },
+    { "name": "解放军报", "trust": 92 },
+    { "name": "中华网", "trust": 80 },
+    { "name": "中新社(中国新闻社)", "trust": 87 }
   ],
   "自媒体": [
-      { name: "自媒体1", trust: 20 },
-      { name: "自媒体2", trust: 10 }
+    { "name": "今日头条", "trust": 30 },
+    { "name": "知乎", "trust": 40 },
+    { "name": "微信公众号", "trust": 28 },
+    { "name": "抖音", "trust": 20 },
+    { "name": "微博大V", "trust": 25 },
+    { "name": "快手", "trust": 18 },
+    { "name": "小红书", "trust": 35 },
+    { "name": "B站UP主", "trust": 38 },
+    { "name": "虎嗅网", "trust": 45 },
+    { "name": "36氪", "trust": 48 }
   ]
 };
 

@@ -35,6 +35,26 @@
             letter-spacing: 2px;
         }
 
+        /* 返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #00e5ff;
+            border: none;
+            color: #000000;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00e5ff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #007acc; /* 深蓝色 */
+            color: #ffffff;
+        }
+
         /* 主内容区 */
         .main-content {
             display: flex;
@@ -229,6 +249,8 @@
     </style>
 </head>
 <body>
+     <!-- 返回按钮 -->
+    <button class="back-button" onclick="goBack()">返回</button>
     <!-- 顶部标题栏 -->
     <div class="header">
         <h1>情感分析</h1>
@@ -251,7 +273,7 @@
         <div class="right-panel" id="sentiment-fluctuation">
             <h2>情感波动图</h2>
             <div class="button-group">
-                <button id="fluctuation-year-btn" class="active">按年</button>
+                <button id="fluctuation-year-btn" class="active">按季度</button>
                 <button id="fluctuation-month-btn">按月</button>
             </div>
             <div class="chart-container" id="sentiment-fluctuation-chart"></div>
@@ -293,18 +315,18 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>我今天真是太开心了，感谢大家的支持！</td>
-                    <td>85</td>
-                    <td>正面</td>
-                </tr>
-                <tr>
-                    <td>这个产品真是糟糕透顶，完全不值得购买。</td>
-                    <td>90</td>
+                    <td>街道统一“黑底白字”店招遭吐槽后连夜拆除</td>
+                    <td>99.94</td>
                     <td>负面</td>
                 </tr>
                 <tr>
-                    <td>今天的天气不错，但没什么特别的。</td>
-                    <td>50</td>
+                    <td>沉睡中的城市被温暖的霞光唤醒，展开一幅冬日的迷人景象。</td>
+                    <td>97.65</td>
+                    <td>正面</td>
+                </tr>
+                <tr>
+                    <td>董浩叔叔爱书画全网寻找给自己写过信的80、90后小朋友。</td>
+                    <td>0.54</td>
                     <td>中性</td>
                 </tr>
             </tbody>
@@ -351,38 +373,66 @@
 
     <!-- 自定义脚本 -->
     <script>
-        // 示例数据
-        const sentimentData = {
-            "positive": 60,
-            "negative": 25,
-            "neutral": 15
-        };
 
-        const fluctuationDataYear = {
-            "正面": [50, 55, 60, 65, 70, 75, 80, 85],
-            "负面": [30, 28, 25, 22, 20, 18, 15, 12],
-            "中性": [20, 17, 15, 13, 10, 7, 5, 3]
-        };
+         // 返回按钮的功能
+        function goBack() {
+            window.history.back(); // 返回到上一个页面
+        }
 
-        const fluctuationDataMonth = {
-            "正面": [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            "负面": [8, 7, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1],
-            "中性": [5, 4, 4, 3, 2, 2, 1, 1, 1, 0, 0, 0]
-        };
+        // 声明全局变量
+        let sentimentData = {};
+        let fluctuationDataQuarter = {};
+        let fluctuationDataMonth = {};
+        let positiveKeywords = [];
+        let negativeKeywords = [];
 
-        const positiveKeywords = ["优秀", "满意", "高兴", "快乐", "成功", "愉快", "赞扬", "幸福"];
-        const negativeKeywords = ["糟糕", "失望", "愤怒", "不满", "悲伤", "烦恼", "失败", "痛苦"];
+
 
         let currentFluctuationDimension = "year";
         let currentKeywordType = "positive";
 
         // 初始化页面
         document.addEventListener("DOMContentLoaded", () => {
+            loadSentimentData(); // 加载情感数据
             renderSentimentPieChart();
             renderFluctuationChart(currentFluctuationDimension);
             renderWordCloud(currentKeywordType);
             attachButtonEvents();
         });
+
+        // 加载情感数据
+function loadSentimentData() {
+    fetch('outcome1.json')
+        .then(response => response.json())
+        .then(data => {
+            sentimentData = {
+                positive: data.sentiment_counts["正向"],
+                negative: data.sentiment_counts["负向"],
+                neutral: data.sentiment_counts["中性"]
+            };
+
+        fluctuationDataMonth = {
+          "正面": data.monthly_sentiment["正向"],
+          "负面": data.monthly_sentiment["负向"],
+          "中性": data.monthly_sentiment["中性"]
+        };
+
+        fluctuationDataQuarter = {
+          "正面": data.quarterly_sentiment["正向"],
+          "负面": data.quarterly_sentiment["负向"],
+          "中性": data.quarterly_sentiment["中性"]
+        };
+
+            positiveKeywords = data.positive_keywords;
+            negativeKeywords = data.negative_keywords;
+
+            renderSentimentPieChart();
+            renderFluctuationChart("year"); // 默认显示按季度数据
+            renderWordCloud("positive"); // 默认显示正面关键词
+            attachButtonEvents();
+        })
+        .catch(error => console.error('Error loading JSON data:', error));
+}
 
         // 附加按钮事件监听
         function attachButtonEvents() {
@@ -464,8 +514,8 @@
             let data, xAxisData;
 
             if (dimension === "year") {
-                data = fluctuationDataYear;
-                xAxisData = ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+                data = fluctuationDataQuarter;
+                xAxisData = ['2023-Q4', '2024-Q1', '2024-Q2', '2024-Q3', '2024-Q4'];
             } else {
                 data = fluctuationDataMonth;
                 xAxisData = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
@@ -473,7 +523,7 @@
 
             const option = {
                 title: {
-           
+
                 },
                 tooltip: {
                     trigger: 'axis'
@@ -562,7 +612,7 @@
                 const value = params.value;
                 let detailedData;
                 if (currentFluctuationDimension === 'year') {
-                    detailedData = fluctuationDataYear[topic][params.dataIndex];
+                    detailedData = fluctuationDataQuarter[topic][params.dataIndex];
                 } else {
                     detailedData = fluctuationDataMonth[topic][params.dataIndex];
                 }

@@ -12,14 +12,15 @@
     <script src="https://fastly.jsdelivr.net/npm/echarts/map/js/china.js"></script>
 </head>
 <body>
+    <!-- 加载界面 -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
     <!-- 顶部标题横栏 -->
     <header id="header">
         <h1>舆情管理系统</h1>
     </header>
-
-    <div id="loading-screen">
-        <div class="spinner"></div>
-    </div>
 
     <!-- 主容器 -->
     <div id="main-container">
@@ -27,22 +28,18 @@
         <aside id="left">
             <div id="box1" class="box" onclick="openModal(1)">
                 <div class="box-title">数据总览</div>
-                <!-- 移除预览内容 -->
             </div>
 
             <div id="box2" class="box" onclick="openModal(2)">
                 <div class="box-title">时间维度数据</div>
-                <!-- 移除预览内容 -->
             </div>
 
             <div id="box3" class="box" onclick="openModal(3)">
                 <div class="box-title">互动分析</div>
-                <!-- 移除预览内容 -->
             </div>
 
             <div id="box4" class="box" onclick="openModal(4)">
                 <div class="box-title">关键词分析</div>
-                <!-- 移除预览内容 -->
             </div>
         </aside>
 
@@ -63,34 +60,31 @@
         </section>
     </div>
 
-    <!-- 弹出窗口 (模态框) -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modal-body">
-                <!-- 模态框内容区域 -->
+            <div id="modal-body" class="modal-body">
+                <!-- 各种模态框的内容将动态加载到这里 -->
             </div>
             <div id="modal-chart" class="modal-chart"></div>
         </div>
     </div>
 
     <!-- 页面底部导航链接 -->
-    <!-- 页面底部导航链接 -->
-<div id="bottom-nav">
-    <div class="bottom-nav-box" onclick="navigateTo('page1.html')">话题分析</div>
-    <div class="bottom-nav-box" onclick="navigateTo('page2.html')">情感分析</div>
-    <div class="bottom-nav-box" onclick="navigateTo('page3.html')">事件抽取</div>
-    <div class="bottom-nav-box" onclick="navigateTo('page4.html')">谣言检测</div>
-</div>
-
+    <div id="bottom-nav">
+        <div class="bottom-nav-box" onclick="navigateTo('page1.html')">话题分析</div>
+        <div class="bottom-nav-box" onclick="navigateTo('page2.html')">情感分析</div>
+        <div class="bottom-nav-box" onclick="navigateTo('page3.html')">事件抽取</div>
+        <div class="bottom-nav-box" onclick="navigateTo('page4.html')">谣言检测</div>
+    </div>
 
     <!-- 底部版权信息 -->
     <footer id="footer">
-        <p>© 2024 高科技数据可视化仪表板. 版权所有.</p>
+        <p>© 2024 武汉大学国家网络安全学院舆情分析课程. 版权所有.</p>
     </footer>
 
     <!-- 引入 JS -->
-      <script type="text/javascript" src="./weibo_data.json"></script> 
+    <script type="text/javascript" src="./weibo_data.json"></script> 
     <script src="index.js"></script>
 </body>
 </html>

@@ -338,85 +338,102 @@
     </div>
     <!-- 自定义脚本 -->
     <script>
-        // 示例数据
-        const entityData = [
-            { category: "人物", name: "张艺兴", frequency: 15 },
-            { category: "组织", name: "苹果公司", frequency: 10 },
-            { category: "地点", name: "北京", frequency: 8 },
-            // ...更多数据
-        ];
-        const relationshipData = {
-            nodes: [
-                { id: "张艺兴", category: "人物" },
-                { id: "苹果公司", category: "组织" },
-                { id: "北京", category: "地点" },
-                { id: "政策", category: "政策事件" },
-                // ...更多节点
-            ],
-            links: [
-                { source: "张艺兴", target: "苹果公司", relation: "隶属于" },
-                { source: "苹果公司", target: "北京", relation: "总部位于" },
-                { source: "政策", target: "北京", relation: "发布于" },
-                // ...更多链接
-            ]
-        };
-        const eventData = [
-            {
-                name: "iPhone发布会",
-                type: "科技事件",
-                description: "苹果公司发布最新款iPhone手机，展示新功能和设计。",
-                entities: ["苹果公司", "张艺兴", "北京"]
-            },
-            {
-                name: "政策调整",
-                type: "政策事件",
-                description: "政府对互联网监管政策进行重大调整，影响行业发展。",
-                entities: ["政策", "北京"]
-            },
-            // ...更多事件
-        ];
-        const eventHeatData = {
-            "iPhone发布会": [50, 60, 70, 80, 90, 100, 110, 120],
-            "政策调整": [80, 75, 70, 65, 60, 55, 50, 45],
-            // ...更多事件数据
-        };
-        const eventSentimentData = {
-            "iPhone发布会": { positive: 70, negative: 20, neutral: 10 },
-            "政策调整": { positive: 30, negative: 50, neutral: 20 },
-            // ...更多事件情感数据
-        };
-        // 初始化页面
+        // 替换原有的数据声明部分
+        let entityData = [];
+        let relationshipData = { nodes: [], links: [] };
+        let eventData = [];
+        let eventHeatData = {};
+        let eventSentimentData = {};
+
+        // 添加数据加载函数
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // 数据验证
+                if (!data.entityData || !Array.isArray(data.entityData)) {
+                    throw new Error('Invalid entityData format');
+                }
+                if (!data.relationshipData || !data.relationshipData.nodes || !data.relationshipData.links) {
+                    throw new Error('Invalid relationshipData format');
+                }
+                if (!data.eventData || !Array.isArray(data.eventData)) {
+                    throw new Error('Invalid eventData format');
+                }
+                if (!data.eventHeatData || !data.eventSentimentData) {
+                    throw new Error('Missing event data');
+                }
+                
+                // 加载数据
+                entityData = data.entityData;
+                relationshipData = data.relationshipData;
+                eventData = data.eventData;
+                eventHeatData = data.eventHeatData;
+                eventSentimentData = data.eventSentimentData;
+                
+                // 初始化所有可视化
+                renderEntityTable();
+                renderEventTable();
+                renderKnowledgeGraph();
+                const heatChart = renderEventHeatChart();
+                const sentimentChart = renderEventSentimentChart();
+                
+                // 窗口大小变化时重绘图表
+                window.addEventListener('resize', () => {
+                    heatChart.resize();
+                    sentimentChart.resize();
+                });
+                
+            } catch (error) {
+                console.error('Error loading or processing data:', error);
+                document.body.innerHTML += `
+                    <div style="color: red; padding: 20px; background: rgba(255,0,0,0.1); border: 1px solid red; margin: 10px;">
+                        Error loading data: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // 修改DOMContentLoaded事件监听器
         document.addEventListener("DOMContentLoaded", () => {
-            renderEntityTable();
-            renderKnowledgeGraph();
-            renderEventHeatChart();
-            renderEventSentimentChart();
-            attachButtonEvents();
+            loadData();
         });
+
         // 实体识别表格
         function renderEntityTable() {
             const entityTableBody = document.querySelector('#entity-recognition table tbody');
             entityTableBody.innerHTML = ''; // 清空表格
+            
+            // 使用从data.json加载的entityData
             entityData.forEach(entity => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${entity.category}</td>
-                                <td>${entity.name}</td>
-                                <td>${entity.frequency}</td>`;
+                tr.innerHTML = `
+                    <td>${entity.category}</td>
+                    <td>${entity.name}</td>
+                    <td>${entity.frequency}</td>
+                `;
                 entityTableBody.appendChild(tr);
             });
-            // 更新最常提到的实体
-            const topEntities = entityData.reduce((acc, entity) => {
-                if (!acc[entity.category] || acc[entity.category].frequency < entity.frequency) {
-                    acc[entity.category] = entity;
-                }
-                return acc;
-            }, {});
+
+            // 更新示例数据区域
             const sampleDataDiv = document.querySelector('#entity-recognition .sample-data');
-            sampleDataDiv.innerHTML = `<p><strong>最常提到的实体：</strong></p>`;
-            for (const category in topEntities) {
-                const entity = topEntities[category];
-                sampleDataDiv.innerHTML += `<p>${category}：${entity.name}（${entity.frequency}次）</p>`;
-            }
+            const topEntities = {};
+            entityData.forEach(entity => {
+                if (!topEntities[entity.category] || 
+                    topEntities[entity.category].frequency < entity.frequency) {
+                    topEntities[entity.category] = entity;
+                }
+            });
+
+            let sampleHtml = `<p><strong>最常提到的实体：</strong></p>`;
+            Object.values(topEntities).forEach(entity => {
+                sampleHtml += `<p>${entity.category}：${entity.name}（${entity.frequency}次）</p>`;
+            });
+            sampleDataDiv.innerHTML = sampleHtml;
         }
         // 关系抽取与知识图谱
         function renderKnowledgeGraph() {
@@ -424,10 +441,32 @@
             container.innerHTML = ''; // 清空之前的知识图谱
             const width = container.clientWidth;
             const height = container.clientHeight;
+            
+            // 确保容器有足够的高度
+            if (height < 400) {
+                container.style.height = '600px';
+            }
+            
             const svg = d3.select(container)
-                          .append("svg")
-                          .attr("width", width)
-                          .attr("height", height);
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // 添加箭头定义
+            svg.append("defs").selectAll("marker")
+                .data(["end"])
+                .enter().append("marker")
+                .attr("id", "arrow")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 20)  // 调整箭头位置
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("fill", "#00e5ff");
+
             const categories = {
                 "人物": { color: "#1e90ff" },
                 "组织": { color: "#ff6347" },
@@ -445,7 +484,8 @@
                 .data(relationshipData.links)
                 .enter().append("line")
                 .attr("stroke-width", 2)
-                .attr("stroke", "#00e5ff");
+                .attr("stroke", "#00e5ff")
+                .attr("marker-end", "url(#arrow)");  // 添加箭头
             const node = svg.append("g")
                 .attr("class", "nodes")
                 .selectAll("circle")
@@ -466,6 +506,16 @@
                 .attr("text-anchor", "middle")
                 .attr("fill", "#00e5ff")
                 .text(d => d.id);
+            // 添加关系标签
+            const linkLabels = svg.append("g")
+                .attr("class", "link-labels")
+                .selectAll("text")
+                .data(relationshipData.links)
+                .enter().append("text")
+                .attr("dy", -5)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#00e5ff")
+                .text(d => d.relation);
             // 实现可勾选实体来显示或隐藏
             const checkboxesContainer = document.createElement('div');
             checkboxesContainer.style.marginTop = '10px';
@@ -518,6 +568,9 @@
                 labels
                     .attr("x", d => d.x)
                     .attr("y", d => d.y);
+                linkLabels
+                    .attr("x", d => (d.source.x + d.target.x) / 2)
+                    .attr("y", d => (d.source.y + d.target.y) / 2);
             });
             function dragstarted(event, d) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -537,12 +590,20 @@
         // 事件热度折线图
         function renderEventHeatChart() {
             const chartDom = document.getElementById('event-heat-chart');
-            const myChart = echarts.init(chartDom);
-            const events = eventData.map(event => event.name);
-            const series = eventData.map(event => ({
-                name: event.name,
+            const myChart = echarts.init(chartDom, 'dark');  // 使用暗色主题
+            
+            // 确保容器有足够的高度
+            if (chartDom.clientHeight < 400) {
+                chartDom.style.height = '400px';
+            }
+            
+            const events = Object.keys(eventHeatData);  // 直接从热度数据获取事件名称
+            const xAxisData = ['2024第一季度', '2024第二季度', '2024第三季度', '2024第四季度'];
+            
+            const series = events.map(eventName => ({
+                name: eventName,
                 type: 'line',
-                data: eventHeatData[event.name],
+                data: eventHeatData[eventName],
                 smooth: true,
                 symbol: 'circle',
                 symbolSize: 8,
@@ -550,145 +611,147 @@
                     width: 3
                 },
                 emphasis: {
-                    focus: 'series'
+                    focus: 'series',
+                    itemStyle: {
+                        borderWidth: 3
+                    }
                 }
             }));
-            const xAxisData = ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+
             const option = {
+                backgroundColor: 'transparent',
                 title: {
-                    text: '事件热度图',
+                    text: '事件热度趋势',
                     left: 'center',
                     textStyle: { color: '#00e5ff' }
                 },
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    borderColor: '#00e5ff',
+                    textStyle: { color: '#fff' }
                 },
                 legend: {
                     data: events,
-                    textStyle: { color: '#00e5ff' }
+                    textStyle: { color: '#00e5ff' },
+                    top: 30
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '10%',
+                    bottom: '3%',
                     containLabel: true
                 },
                 xAxis: {
                     type: 'category',
                     data: xAxisData,
-                    axisLabel: { color: '#00e5ff' },
-                    axisLine: { lineStyle: { color: '#00e5ff' } },
-                    axisTick: { show: false }
+                    axisLabel: { 
+                        color: '#00e5ff',
+                        rotate: 45
+                    },
+                    axisLine: { lineStyle: { color: '#00e5ff' } }
                 },
                 yAxis: {
                     type: 'value',
+                    name: '热度值',
+                    nameTextStyle: { color: '#00e5ff' },
                     axisLabel: { color: '#00e5ff' },
                     axisLine: { lineStyle: { color: '#00e5ff' } },
-                    splitLine: { lineStyle: { color: '#333333' } }
+                    splitLine: { lineStyle: { color: 'rgba(0,229,255,0.2)' } }
                 },
                 series: series,
                 animation: true,
                 animationDuration: 1500
             };
-            option && myChart.setOption(option);
-            // 添加点击事件（示例：点击数据点打开模态框）
-            myChart.on('click', function (params) {
-                const eventName = params.seriesName;
-                const year = xAxisData[params.dataIndex];
-                const heat = params.value;
-                const content = `<h3>${eventName} - ${year}</h3>
-                                 <p>热度值: ${heat}</p>`;
-                openModal(content);
-            });
+
+            myChart.setOption(option);
+            return myChart;  // 返回图表实例以便后续使用
         }
         // 事件情感分析折线图
         function renderEventSentimentChart() {
             const chartDom = document.getElementById('event-sentiment-chart');
-            const myChart = echarts.init(chartDom);
-            const events = eventData.map(event => event.name);
-            const positiveData = eventData.map(event => eventSentimentData[event.name].positive);
-            const negativeData = eventData.map(event => eventSentimentData[event.name].negative);
-            const neutralData = eventData.map(event => eventSentimentData[event.name].neutral);
+            const myChart = echarts.init(chartDom, 'dark');  // 使用暗色主题
+            
+            // 确保容器有足够的高度
+            if (chartDom.clientHeight < 400) {
+                chartDom.style.height = '400px';
+            }
+
+            const events = Object.keys(eventSentimentData);
+            const sentimentTypes = ['positive', 'negative', 'neutral'];
+            
             const option = {
+                backgroundColor: 'transparent',
                 title: {
                     text: '事件情感分析',
                     left: 'center',
                     textStyle: { color: '#00e5ff' }
                 },
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    borderColor: '#00e5ff',
+                    textStyle: { color: '#fff' }
                 },
                 legend: {
                     data: ['正面', '负面', '中性'],
-                    textStyle: { color: '#00e5ff' }
+                    textStyle: { color: '#00e5ff' },
+                    top: 30
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '10%',
+                    bottom: '3%',
                     containLabel: true
                 },
                 xAxis: {
                     type: 'category',
                     data: events,
-                    axisLabel: { color: '#00e5ff', rotate: 45 },
-                    axisLine: { lineStyle: { color: '#00e5ff' } },
-                    axisTick: { show: false }
+                    axisLabel: { 
+                        color: '#00e5ff',
+                        rotate: 45,
+                        interval: 0
+                    },
+                    axisLine: { lineStyle: { color: '#00e5ff' } }
                 },
                 yAxis: {
                     type: 'value',
+                    name: '情感值(%)',
+                    nameTextStyle: { color: '#00e5ff' },
                     axisLabel: { color: '#00e5ff' },
                     axisLine: { lineStyle: { color: '#00e5ff' } },
-                    splitLine: { lineStyle: { color: '#333333' } }
+                    splitLine: { lineStyle: { color: 'rgba(0,229,255,0.2)' } }
                 },
                 series: [
                     {
                         name: '正面',
                         type: 'bar',
-                        data: positiveData,
-                        itemStyle: { color: '#32cd32' },
-                        emphasis: {
-                            itemStyle: {
-                                color: '#66ff66'
-                            }
-                        }
+                        stack: 'total',
+                        data: events.map(event => eventSentimentData[event].positive),
+                        itemStyle: { color: '#32cd32' }
                     },
                     {
                         name: '负面',
                         type: 'bar',
-                        data: negativeData,
-                        itemStyle: { color: '#ff6347' },
-                        emphasis: {
-                            itemStyle: {
-                                color: '#ff8c69'
-                            }
-                        }
+                        stack: 'total',
+                        data: events.map(event => eventSentimentData[event].negative),
+                        itemStyle: { color: '#ff6347' }
                     },
                     {
                         name: '中性',
                         type: 'bar',
-                        data: neutralData,
-                        itemStyle: { color: '#1e90ff' },
-                        emphasis: {
-                            itemStyle: {
-                                color: '#63b3ed'
-                            }
-                        }
+                        stack: 'total',
+                        data: events.map(event => eventSentimentData[event].neutral),
+                        itemStyle: { color: '#1e90ff' }
                     }
                 ],
                 animation: true,
                 animationDuration: 1500
             };
-            option && myChart.setOption(option);
-            // 添加点击事件（示例：点击柱状图数据点打开模态框）
-            myChart.on('click', function (params) {
-                const eventName = params.name;
-                const sentiment = params.seriesName;
-                const value = params.value;
-                const content = `<h3>${eventName} - ${sentiment}情感</h3>
-                                 <p>情感分布值: ${value}</p>`;
-                openModal(content);
-            });
+
+            myChart.setOption(option);
+            return myChart;  // 返回图表实例以便后续使用
         }
         // 事件识别与抽取表格（静态示例，若需动态生成可进一步扩展）
         // 在这里，我们已在HTML中静态添加了表格
@@ -767,10 +830,10 @@
                     focus: 'series'
                 }
             }));
-            const xAxisData = ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+            const xAxisData = ['2024第一季度', '2024第二季度', '2024第三季度', '2024第四季度'];
             const option = {
                 title: {
-                   
+                
                 },
                 tooltip: {
                     trigger: 'axis'
@@ -934,6 +997,40 @@
                 modal.style.display = "none";
             }
         }
+        // 添加事件表格渲染函数
+        function renderEventTable() {
+            const eventTableBody = document.querySelector('#event-extraction-table tbody');
+            eventTableBody.innerHTML = ''; // 清空表格
+            
+            // 使用从data.json加载的eventData
+            eventData.forEach(event => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${event.name}</td>
+                    <td>${event.type}</td>
+                    <td>${event.description}</td>
+                    <td>${event.entities.join(', ')}</td>
+                `;
+                eventTableBody.appendChild(tr);
+            });
+        }
+        // 添加窗口大小变化监听
+        window.addEventListener('resize', () => {
+            // 重新初始化所有图表
+            const charts = [
+                document.getElementById('event-heat-chart'),
+                document.getElementById('event-sentiment-chart')
+            ];
+            
+            charts.forEach(chartDom => {
+                if (chartDom) {
+                    const chart = echarts.getInstanceByDom(chartDom);
+                    if (chart) {
+                        chart.resize();
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
     "entityData": [
-        { "category": "人物", "name": "张艺兴", "frequency": 15 },
+        { "category": "人物", "name": "张兴", "frequency": 15 },
         { "category": "组织", "name": "苹果公司", "frequency": 10 },
         { "category": "地点", "name": "北京", "frequency": 8 }
     ],

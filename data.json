@@ -1,42 +1,1017 @@
 {
     "entityData": [
-        { "category": "人物", "name": "张兴", "frequency": 15 },
-        { "category": "组织", "name": "苹果公司", "frequency": 10 },
-        { "category": "地点", "name": "北京", "frequency": 8 }
+        {
+            "category": "GPE",
+            "name": "中国",
+            "frequency": 9043
+        },
+        {
+            "category": "GPE",
+            "name": "美国",
+            "frequency": 8951
+        },
+        {
+            "category": "GPE",
+            "name": "以色列",
+            "frequency": 3693
+        },
+        {
+            "category": "GPE",
+            "name": "伊朗",
+            "frequency": 2574
+        },
+        {
+            "category": "DATE",
+            "name": "今年",
+            "frequency": 1088
+        },
+        {
+            "category": "DATE",
+            "name": "2024年",
+            "frequency": 977
+        },
+        {
+            "category": "DATE",
+            "name": "当天",
+            "frequency": 763
+        },
+        {
+            "category": "DATE",
+            "name": "今天",
+            "frequency": 749
+        },
+        {
+            "category": "TIME",
+            "name": "当晚",
+            "frequency": 137
+        },
+        {
+            "category": "TIME",
+            "name": "24小时",
+            "frequency": 124
+        },
+        {
+            "category": "TIME",
+            "name": "下午",
+            "frequency": 120
+        },
+        {
+            "category": "TIME",
+            "name": "今晚",
+            "frequency": 104
+        },
+        {
+            "category": "ORG",
+            "name": "央视",
+            "frequency": 1242
+        },
+        {
+            "category": "ORG",
+            "name": "欧盟",
+            "frequency": 810
+        },
+        {
+            "category": "ORG",
+            "name": "路透社",
+            "frequency": 583
+        },
+        {
+            "category": "ORG",
+            "name": "联合国",
+            "frequency": 523
+        },
+        {
+            "category": "CARDINAL",
+            "name": "两",
+            "frequency": 3946
+        },
+        {
+            "category": "CARDINAL",
+            "name": "2",
+            "frequency": 2832
+        },
+        {
+            "category": "CARDINAL",
+            "name": "一",
+            "frequency": 2264
+        },
+        {
+            "category": "CARDINAL",
+            "name": "3",
+            "frequency": 2259
+        },
+        {
+            "category": "PERSON",
+            "name": "[组图",
+            "frequency": 3163
+        },
+        {
+            "category": "PERSON",
+            "name": "马斯克",
+            "frequency": 703
+        },
+        {
+            "category": "PERSON",
+            "name": "观察者",
+            "frequency": 686
+        },
+        {
+            "category": "PERSON",
+            "name": "哈马斯",
+            "frequency": 622
+        },
+        {
+            "category": "FAC",
+            "name": "白宫",
+            "frequency": 67
+        },
+        {
+            "category": "FAC",
+            "name": "海湖庄园",
+            "frequency": 47
+        },
+        {
+            "category": "FAC",
+            "name": "广州地铁",
+            "frequency": 40
+        },
+        {
+            "category": "FAC",
+            "name": "国会大厦",
+            "frequency": 33
+        },
+        {
+            "category": "EVENT",
+            "name": "奥运",
+            "frequency": 287
+        },
+        {
+            "category": "EVENT",
+            "name": "巴黎奥运会",
+            "frequency": 201
+        },
+        {
+            "category": "EVENT",
+            "name": "奥运会",
+            "frequency": 193
+        },
+        {
+            "category": "EVENT",
+            "name": "世界杯",
+            "frequency": 97
+        },
+        {
+            "category": "QUANTITY",
+            "name": "10米",
+            "frequency": 63
+        },
+        {
+            "category": "QUANTITY",
+            "name": "5米",
+            "frequency": 48
+        },
+        {
+            "category": "QUANTITY",
+            "name": "6级",
+            "frequency": 46
+        },
+        {
+            "category": "QUANTITY",
+            "name": "7.3级",
+            "frequency": 44
+        },
+        {
+            "category": "ORDINAL",
+            "name": "第一",
+            "frequency": 1912
+        },
+        {
+            "category": "ORDINAL",
+            "name": "第二",
+            "frequency": 760
+        },
+        {
+            "category": "ORDINAL",
+            "name": "第三",
+            "frequency": 404
+        },
+        {
+            "category": "ORDINAL",
+            "name": "第四",
+            "frequency": 191
+        },
+        {
+            "category": "LOC",
+            "name": "欧洲",
+            "frequency": 853
+        },
+        {
+            "category": "LOC",
+            "name": "加沙地带",
+            "frequency": 423
+        },
+        {
+            "category": "LOC",
+            "name": "中东",
+            "frequency": 330
+        },
+        {
+            "category": "LOC",
+            "name": "亚洲",
+            "frequency": 248
+        },
+        {
+            "category": "MONEY",
+            "name": "10万元",
+            "frequency": 107
+        },
+        {
+            "category": "MONEY",
+            "name": "500元",
+            "frequency": 90
+        },
+        {
+            "category": "MONEY",
+            "name": "2000元",
+            "frequency": 74
+        },
+        {
+            "category": "MONEY",
+            "name": "5000元",
+            "frequency": 74
+        },
+        {
+            "category": "LAW",
+            "name": "联合国宪章",
+            "frequency": 48
+        },
+        {
+            "category": "LAW",
+            "name": "国会山报",
+            "frequency": 39
+        },
+        {
+            "category": "LAW",
+            "name": "中华人民共和国治安管理处罚法",
+            "frequency": 23
+        },
+        {
+            "category": "LAW",
+            "name": "中华人民共和国刑法",
+            "frequency": 21
+        },
+        {
+            "category": "WORK_OF_ART",
+            "name": "新京报",
+            "frequency": 105
+        },
+        {
+            "category": "WORK_OF_ART",
+            "name": "卫报",
+            "frequency": 102
+        },
+        {
+            "category": "WORK_OF_ART",
+            "name": "繁花",
+            "frequency": 81
+        },
+        {
+            "category": "WORK_OF_ART",
+            "name": "黑神话：悟空",
+            "frequency": 48
+        },
+        {
+            "category": "NORP",
+            "name": "美国人",
+            "frequency": 210
+        },
+        {
+            "category": "NORP",
+            "name": "中国人",
+            "frequency": 200
+        },
+        {
+            "category": "LANGUAGE",
+            "name": "英语",
+            "frequency": 153
+        },
+        {
+            "category": "LANGUAGE",
+            "name": "英文",
+            "frequency": 101
+        },
+        {
+            "category": "LANGUAGE",
+            "name": "中文",
+            "frequency": 60
+        },
+        {
+            "category": "LANGUAGE",
+            "name": "马科斯",
+            "frequency": 20
+        },
+        {
+            "category": "PRODUCT",
+            "name": "波音",
+            "frequency": 51
+        },
+        {
+            "category": "PRODUCT",
+            "name": "辱骂",
+            "frequency": 27
+        },
+        {
+            "category": "PRODUCT",
+            "name": "Politico",
+            "frequency": 26
+        },
+        {
+            "category": "PRODUCT",
+            "name": "QQ",
+            "frequency": 24
+        },
+        {
+            "category": "PERCENT",
+            "name": "25%",
+            "frequency": 93
+        },
+        {
+            "category": "PERCENT",
+            "name": "40%",
+            "frequency": 72
+        },
+        {
+            "category": "PERCENT",
+            "name": "60%",
+            "frequency": 65
+        },
+        {
+            "category": "PERCENT",
+            "name": "20%",
+            "frequency": 62
+        }
     ],
     "relationshipData": {
         "nodes": [
-            { "id": "张艺", "category": "人物" },
-            { "id": "苹果公司", "category": "组织" },
-            { "id": "北京", "category": "地点" },
-            { "id": "政策", "category": "政策事件" }
+            {
+                "id": "中国",
+                "category": "GPE"
+            },
+            {
+                "id": "美国",
+                "category": "GPE"
+            },
+            {
+                "id": "以色列",
+                "category": "GPE"
+            },
+            {
+                "id": "伊朗",
+                "category": "GPE"
+            },
+            {
+                "id": "今年",
+                "category": "DATE"
+            },
+            {
+                "id": "2024年",
+                "category": "DATE"
+            },
+            {
+                "id": "当天",
+                "category": "DATE"
+            },
+            {
+                "id": "今天",
+                "category": "DATE"
+            },
+            {
+                "id": "当晚",
+                "category": "TIME"
+            },
+            {
+                "id": "24小时",
+                "category": "TIME"
+            },
+            {
+                "id": "下午",
+                "category": "TIME"
+            },
+            {
+                "id": "今晚",
+                "category": "TIME"
+            },
+            {
+                "id": "央视",
+                "category": "ORG"
+            },
+            {
+                "id": "欧盟",
+                "category": "ORG"
+            },
+            {
+                "id": "路透社",
+                "category": "ORG"
+            },
+            {
+                "id": "联合国",
+                "category": "ORG"
+            },
+            {
+                "id": "两",
+                "category": "CARDINAL"
+            },
+            {
+                "id": "2",
+                "category": "CARDINAL"
+            },
+            {
+                "id": "一",
+                "category": "CARDINAL"
+            },
+            {
+                "id": "3",
+                "category": "CARDINAL"
+            },
+            {
+                "id": "[组图",
+                "category": "PERSON"
+            },
+            {
+                "id": "马斯克",
+                "category": "PERSON"
+            },
+            {
+                "id": "观察者",
+                "category": "PERSON"
+            },
+            {
+                "id": "哈马斯",
+                "category": "PERSON"
+            },
+            {
+                "id": "白宫",
+                "category": "FAC"
+            },
+            {
+                "id": "海湖庄园",
+                "category": "FAC"
+            },
+            {
+                "id": "广州地铁",
+                "category": "FAC"
+            },
+            {
+                "id": "国会大厦",
+                "category": "FAC"
+            },
+            {
+                "id": "奥运",
+                "category": "EVENT"
+            },
+            {
+                "id": "巴黎奥运会",
+                "category": "EVENT"
+            },
+            {
+                "id": "奥运会",
+                "category": "EVENT"
+            },
+            {
+                "id": "世界杯",
+                "category": "EVENT"
+            },
+            {
+                "id": "10米",
+                "category": "QUANTITY"
+            },
+            {
+                "id": "5米",
+                "category": "QUANTITY"
+            },
+            {
+                "id": "6级",
+                "category": "QUANTITY"
+            },
+            {
+                "id": "7.3级",
+                "category": "QUANTITY"
+            },
+            {
+                "id": "第一",
+                "category": "ORDINAL"
+            },
+            {
+                "id": "第二",
+                "category": "ORDINAL"
+            },
+            {
+                "id": "第三",
+                "category": "ORDINAL"
+            },
+            {
+                "id": "第四",
+                "category": "ORDINAL"
+            },
+            {
+                "id": "欧洲",
+                "category": "LOC"
+            },
+            {
+                "id": "加沙地带",
+                "category": "LOC"
+            },
+            {
+                "id": "中东",
+                "category": "LOC"
+            },
+            {
+                "id": "亚洲",
+                "category": "LOC"
+            },
+            {
+                "id": "10万元",
+                "category": "MONEY"
+            },
+            {
+                "id": "500元",
+                "category": "MONEY"
+            },
+            {
+                "id": "2000元",
+                "category": "MONEY"
+            },
+            {
+                "id": "5000元",
+                "category": "MONEY"
+            },
+            {
+                "id": "联合国宪章",
+                "category": "LAW"
+            },
+            {
+                "id": "国会山报",
+                "category": "LAW"
+            },
+            {
+                "id": "中华人民共和国治安管理处罚法",
+                "category": "LAW"
+            },
+            {
+                "id": "中华人民共和国刑法",
+                "category": "LAW"
+            },
+            {
+                "id": "新京报",
+                "category": "WORK_OF_ART"
+            },
+            {
+                "id": "卫报",
+                "category": "WORK_OF_ART"
+            },
+            {
+                "id": "繁花",
+                "category": "WORK_OF_ART"
+            },
+            {
+                "id": "黑神话：悟空",
+                "category": "WORK_OF_ART"
+            },
+            {
+                "id": "美国人",
+                "category": "NORP"
+            },
+            {
+                "id": "中国人",
+                "category": "NORP"
+            },
+            {
+                "id": "英语",
+                "category": "LANGUAGE"
+            },
+            {
+                "id": "英文",
+                "category": "LANGUAGE"
+            },
+            {
+                "id": "中文",
+                "category": "LANGUAGE"
+            },
+            {
+                "id": "马科斯",
+                "category": "LANGUAGE"
+            },
+            {
+                "id": "波音",
+                "category": "PRODUCT"
+            },
+            {
+                "id": "辱骂",
+                "category": "PRODUCT"
+            },
+            {
+                "id": "Politico",
+                "category": "PRODUCT"
+            },
+            {
+                "id": "QQ",
+                "category": "PRODUCT"
+            },
+            {
+                "id": "25%",
+                "category": "PERCENT"
+            },
+            {
+                "id": "40%",
+                "category": "PERCENT"
+            },
+            {
+                "id": "60%",
+                "category": "PERCENT"
+            },
+            {
+                "id": "20%",
+                "category": "PERCENT"
+            }
         ],
         "links": [
-            { "source": "张艺兴", "target": "苹果公司", "relation": "隶属于" },
-            { "source": "苹果公司", "target": "北京", "relation": "总部位于" },
-            { "source": "政策", "target": "北京", "relation": "发布于" }
+            {
+                "source": "中国",
+                "target": "美国",
+                "relation": "GPE-GPE"
+            },
+            {
+                "source": "2024年",
+                "target": "巴黎奥运会",
+                "relation": "DATE-EVENT"
+            },
+            {
+                "source": "[组图",
+                "target": "2",
+                "relation": "PERSON-CARDINAL"
+            },
+            {
+                "source": "美国",
+                "target": "第一",
+                "relation": "GPE-ORDINAL"
+            },
+            {
+                "source": "美国",
+                "target": "中国",
+                "relation": "GPE-GPE"
+            },
+            {
+                "source": "中国",
+                "target": "第三",
+                "relation": "GPE-ORDINAL"
+            },
+            {
+                "source": "[组图",
+                "target": "3",
+                "relation": "PERSON-CARDINAL"
+            },
+            {
+                "source": "今天",
+                "target": "下午",
+                "relation": "DATE-TIME"
+            },
+            {
+                "source": "第三",
+                "target": "第四",
+                "relation": "ORDINAL-ORDINAL"
+            },
+            {
+                "source": "中国",
+                "target": "两",
+                "relation": "GPE-CARDINAL"
+            },
+            {
+                "source": "一",
+                "target": "第一",
+                "relation": "CARDINAL-ORDINAL"
+            },
+            {
+                "source": "白宫",
+                "target": "美国",
+                "relation": "ORG-GPE"
+            },
+            {
+                "source": "今天",
+                "target": "中国",
+                "relation": "DATE-GPE"
+            },
+            {
+                "source": "美国",
+                "target": "以色列",
+                "relation": "GPE-GPE"
+            },
+            {
+                "source": "央视",
+                "target": "今天",
+                "relation": "ORG-DATE"
+            },
+            {
+                "source": "2",
+                "target": "3",
+                "relation": "CARDINAL-CARDINAL"
+            },
+            {
+                "source": "3",
+                "target": "第一",
+                "relation": "CARDINAL-ORDINAL"
+            },
+            {
+                "source": "马斯克",
+                "target": "美国",
+                "relation": "PERSON-GPE"
+            },
+            {
+                "source": "一",
+                "target": "两",
+                "relation": "CARDINAL-CARDINAL"
+            },
+            {
+                "source": "一",
+                "target": "3",
+                "relation": "CARDINAL-CARDINAL"
+            },
+            {
+                "source": "第一",
+                "target": "中国",
+                "relation": "ORDINAL-GPE"
+            },
+            {
+                "source": "两",
+                "target": "一",
+                "relation": "CARDINAL-CARDINAL"
+            },
+            {
+                "source": "今年",
+                "target": "3",
+                "relation": "DATE-CARDINAL"
+            },
+            {
+                "source": "美国",
+                "target": "马斯克",
+                "relation": "GPE-PERSON"
+            },
+            {
+                "source": "3",
+                "target": "两",
+                "relation": "CARDINAL-CARDINAL"
+            },
+            {
+                "source": "两",
+                "target": "美国人",
+                "relation": "CARDINAL-NORP"
+            },
+            {
+                "source": "中国",
+                "target": "第一",
+                "relation": "GPE-ORDINAL"
+            },
+            {
+                "source": "两",
+                "target": "第一",
+                "relation": "CARDINAL-ORDINAL"
+            },
+            {
+                "source": "2024年",
+                "target": "美国",
+                "relation": "DATE-GPE"
+            },
+            {
+                "source": "一",
+                "target": "中国",
+                "relation": "CARDINAL-GPE"
+            }
         ]
     },
     "eventData": [
         {
-            "name": "iPhone发布会",
-            "type": "科技事件",
-            "description": "苹果公司发布最新款iPhone手机，展示新功能和设计。",
-            "entities": ["苹果公司", "张艺兴", "北京"]
+            "name": "中国_经济发展",
+            "type": "经济发展",
+            "description": "经济发展创新：中国的引领作用",
+            "entities": [
+                "第一",
+                "一",
+                "中国"
+            ]
         },
         {
-            "name": "政策调整",
-            "type": "政策事件",
-            "description": "政府对互联网监管政策进行重大调整，影响行业发展。",
-            "entities": ["政策", "北京"]
+            "name": "美国_社会民生",
+            "type": "社会民生",
+            "description": "社会民生领域：美国引领新趋势",
+            "entities": [
+                "2024年",
+                "马斯克",
+                "以色列",
+                "美国"
+            ]
+        },
+        {
+            "name": "两_医疗卫生",
+            "type": "医疗卫生",
+            "description": "解读两在医疗卫生领域的最新动态",
+            "entities": [
+                "3",
+                "第一",
+                "一",
+                "美国人",
+                "两"
+            ]
+        },
+        {
+            "name": "以色列_国际关系",
+            "type": "国际关系",
+            "description": "全球国际关系新态势：以色列的重要影响",
+            "entities": [
+                "路透社",
+                "伊朗",
+                "中国",
+                "美国",
+                "以色列"
+            ]
+        },
+        {
+            "name": "[组图_科技创新",
+            "type": "科技创新",
+            "description": "科技创新新动向：[组图的创新实践",
+            "entities": [
+                "3",
+                "马斯克",
+                "2",
+                "观察者",
+                "[组图"
+            ]
+        },
+        {
+            "name": "2_科技创新",
+            "type": "科技创新",
+            "description": "科技创新创新：2的引领作用",
+            "entities": [
+                "3",
+                "两",
+                "[组图",
+                "2"
+            ]
+        },
+        {
+            "name": "伊朗_文化教育",
+            "type": "文化教育",
+            "description": "文化教育新动向：伊朗的创新实践",
+            "entities": [
+                "以色列",
+                "美国人",
+                "中国",
+                "美国",
+                "伊朗"
+            ]
+        },
+        {
+            "name": "一_文化教育",
+            "type": "文化教育",
+            "description": "一在文化教育领域开创新局面",
+            "entities": [
+                "3",
+                "两",
+                "中国",
+                "一"
+            ]
+        },
+        {
+            "name": "3_国际关系",
+            "type": "国际关系",
+            "description": "聚焦3：国际关系领域的新机遇与挑战",
+            "entities": [
+                "2",
+                "第一",
+                "3"
+            ]
+        },
+        {
+            "name": "第一_经济发展",
+            "type": "经济发展",
+            "description": "聚焦第一：经济发展领域的新机遇与挑战",
+            "entities": [
+                "3",
+                "一",
+                "第一"
+            ]
         }
     ],
     "eventHeatData": {
-        "iPhone发布会": [50, 60, 70, 80, 90, 100, 110, 120],
-        "政策调整": [80, 75, 70, 65, 60, 55, 50, 45]
+        "中国_经济发展": [
+            47,
+            77,
+            75,
+            63
+        ],
+        "美国_社会民生": [
+            40,
+            31,
+            62,
+            65
+        ],
+        "两_医疗卫生": [
+            69,
+            46,
+            80,
+            74
+        ],
+        "以色列_国际关系": [
+            77,
+            74,
+            64,
+            52
+        ],
+        "[组图_科技创新": [
+            57,
+            41,
+            52,
+            48
+        ],
+        "2_科技创新": [
+            66,
+            52,
+            52,
+            65
+        ],
+        "伊朗_文化教育": [
+            34,
+            40,
+            53,
+            35
+        ],
+        "一_文化教育": [
+            65,
+            78,
+            62,
+            69
+        ],
+        "3_国际关系": [
+            49,
+            46,
+            52,
+            69
+        ],
+        "第一_经济发展": [
+            54,
+            67,
+            74,
+            57
+        ]
     },
     "eventSentimentData": {
-        "iPhone发布会": { "positive": 70, "negative": 20, "neutral": 10 },
-        "政策调整": { "positive": 30, "negative": 50, "neutral": 20 }
+        "中国_经济发展": {
+            "positive": 56,
+            "negative": 35,
+            "neutral": 9
+        },
+        "美国_社会民生": {
+            "positive": 39,
+            "negative": 41,
+            "neutral": 20
+        },
+        "两_医疗卫生": {
+            "positive": 36,
+            "negative": 31,
+            "neutral": 33
+        },
+        "以色列_国际关系": {
+            "positive": 37,
+            "negative": 48,
+            "neutral": 15
+        },
+        "[组图_科技创新": {
+            "positive": 40,
+            "negative": 43,
+            "neutral": 17
+        },
+        "2_科技创新": {
+            "positive": 47,
+            "negative": 46,
+            "neutral": 7
+        },
+        "伊朗_文化教育": {
+            "positive": 25,
+            "negative": 34,
+            "neutral": 41
+        },
+        "一_文化教育": {
+            "positive": 37,
+            "negative": 47,
+            "neutral": 16
+        },
+        "3_国际关系": {
+            "positive": 48,
+            "negative": 24,
+            "neutral": 28
+        },
+        "第一_经济发展": {
+            "positive": 24,
+            "negative": 22,
+            "neutral": 54
+        }
     }
 }

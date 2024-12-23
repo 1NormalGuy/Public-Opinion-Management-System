@@ -338,53 +338,32 @@
     </div>
     <!-- 自定义脚本 -->
     <script>
-        // 示例数据
-        const entityData = [
-            { category: "人物", name: "张艺兴", frequency: 15 },
-            { category: "组织", name: "苹果公司", frequency: 10 },
-            { category: "地点", name: "北京", frequency: 8 },
-            // ...更多数据
-        ];
-        const relationshipData = {
-            nodes: [
-                { id: "张艺兴", category: "人物" },
-                { id: "苹果公司", category: "组织" },
-                { id: "北京", category: "地点" },
-                { id: "政策", category: "政策事件" },
-                // ...更多节点
-            ],
-            links: [
-                { source: "张艺兴", target: "苹果公司", relation: "隶属于" },
-                { source: "苹果公司", target: "北京", relation: "总部位于" },
-                { source: "政策", target: "北京", relation: "发布于" },
-                // ...更多链接
-            ]
-        };
-        const eventData = [
-            {
-                name: "iPhone发布会",
-                type: "科技事件",
-                description: "苹果公司发布最新款iPhone手机，展示新功能和设计。",
-                entities: ["苹果公司", "张艺兴", "北京"]
-            },
-            {
-                name: "政策调整",
-                type: "政策事件",
-                description: "政府对互联网监管政策进行重大调整，影响行业发展。",
-                entities: ["政策", "北京"]
-            },
-            // ...更多事件
-        ];
-        const eventHeatData = {
-            "iPhone发布会": [50, 60, 70, 80, 90, 100, 110, 120],
-            "政策调整": [80, 75, 70, 65, 60, 55, 50, 45],
-            // ...更多事件数据
-        };
-        const eventSentimentData = {
-            "iPhone发布会": { positive: 70, negative: 20, neutral: 10 },
-            "政策调整": { positive: 30, negative: 50, neutral: 20 },
-            // ...更多事件情感数据
-        };
+        document.addEventListener("DOMContentLoaded", () => {
+            // 从 data.json 加载数据
+            fetch("data.json")
+                .then(response => response.json())
+                .then(data => {
+                    // 从 JSON 文件中加载各类数据
+                    const entityData = data.entityData;
+                    const relationshipData = data.relationshipData;
+                    const eventData = data.eventData;
+                    const eventHeatData = data.eventHeatData;
+                    const eventSentimentData = data.eventSentimentData;
+        
+                    // 渲染页面各个部分
+                    renderEntityTable(entityData);
+                    renderKnowledgeGraph(relationshipData);
+                    renderEventHeatChart(eventHeatData, eventData);
+                    renderEventSentimentChart(eventSentimentData, eventData);
+        
+                    // 绑定按钮事件
+                    attachButtonEvents();
+                })
+                .catch(error => {
+                    console.error("加载 JSON 数据失败:", error);
+                });
+        });
+
         // 初始化页面
         document.addEventListener("DOMContentLoaded", () => {
             renderEntityTable();

@@ -5,14 +5,49 @@
     <title>谣言检测 - Yaoyan</title>
     <!-- 引入 ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-    <!-- 引入 Font Awesome（用于图标，可选） -->
+    <!-- 引入 Font Awesome（用于图标） -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 引入 Google Fonts（用于独特字体，可选） -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <!-- 引入自定义样式 -->
     <link rel="stylesheet" href="yaoyan.css">
+    <style>
+        /* 返回按钮样式 */
+        .back-button {
+            display: flex;
+            align-items: center; /* 垂直居中对齐 */
+            position: absolute;
+            top: 20px;
+            left: 20px; /* 适当调整位置 */
+            background-color: #00e5ff;
+            border: none;
+            color: #000000;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00e5ff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #007acc; /* 深蓝色 */
+            color: #ffffff;
+        }
+
+        /* 箭头图标样式 */
+        .arrow-icon {
+            margin-right: 5px; /* 图标与文本之间的间距 */
+            font-size: 18px; /* 图标大小 */
+            color: #000000; /* 图标颜色 */
+        }
+    </style>
 </head>
 <body>
+    <!-- 返回按钮 -->
+    <button class="back-button" onclick="goBack()">
+        <i class="fas fa-arrow-left arrow-icon"></i>返回首页
+    </button>
+
     <!-- 顶部标题栏 -->
     <div class="header">
         <h1>谣言检测仪表板 - Yaoyan</h1>
@@ -68,5 +103,13 @@
 
     <!-- 引入自定义脚本 -->
     <script src="yaoyan.js"></script>
+
+    <!-- 自定义脚本 -->
+    <script>
+        // 返回按钮的功能
+        function goBack() {
+            window.location.href = "index.html"; // 返回到 index.html 页面
+        }
+    </script>
 </body>
 </html>

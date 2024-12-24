@@ -100,30 +100,32 @@
 
         /* 按钮组样式 */
         .button-group button,
-        .trend-button-group button,
-        .keywords-button-group button {
-            background-color: #00e5ff;
-            border: none;
-            color: #000000;
-            padding: 10px 15px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            box-shadow: 0 0 10px #00e5ff;
-        }
+.trend-button-group button,
+.keywords-button-group button,
+.refresh-button {
+    background-color: #00e5ff;
+    border: none;
+    color: #000000;
+    padding: 10px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 0 10px #00e5ff;
+}
 
-        .button-group button.active,
-        .button-group button:hover,
-        .trend-button-group button.active,
-        .trend-button-group button:hover,
-        .keywords-button-group button.active,
-        .keywords-button-group button:hover {
-            background-color: #007acc; /* 深蓝色 */
-            color: #ffffff;
-            box-shadow: 0 0 20px #007acc;
-        }
+.button-group button.active,
+.button-group button:hover,
+.trend-button-group button.active,
+.trend-button-group button:hover,
+.keywords-button-group button.active,
+.keywords-button-group button:hover,
+.refresh-button:hover {
+    background-color: #007acc; /* 深蓝色 */
+    color: #ffffff;
+    box-shadow: 0 0 20px #007acc;
+}
 
         /* 图表容器 */
         .chart-container {
@@ -312,6 +314,7 @@
         <h2>细粒度情感分析</h2>
         <!-- 情感强度评分 -->
         <h3>情感强度评分</h3>
+        <button class="refresh-button" onclick="refreshIntensityData()">刷新</button>
         <table id="sentiment-intensity-table">
             <thead>
                 <tr>
@@ -320,26 +323,13 @@
                     <th>情感分类</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>街道统一“黑底白字”店招遭吐槽后连夜拆除</td>
-                    <td>99.94</td>
-                    <td>负面</td>
-                </tr>
-                <tr>
-                    <td>沉睡中的城市被温暖的霞光唤醒，展开一幅冬日的迷人景象。</td>
-                    <td>97.65</td>
-                    <td>正面</td>
-                </tr>
-                <tr>
-                    <td>董浩叔叔爱书画全网寻找给自己写过信的80、90后小朋友。</td>
-                    <td>0.54</td>
-                    <td>中性</td>
-                </tr>
+            <tbody id="intensity-tbody">
+                <!-- 数据将动态插入于此 -->
             </tbody>
         </table>
         <!-- 情感对象 -->
         <h3>情感对象</h3>
+       <button class="refresh-button" onclick="refreshObjectData()">刷新</button>
         <table id="sentiment-object-table">
             <thead>
                 <tr>
@@ -348,22 +338,8 @@
                     <th>情感分析结果</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>我喜欢这款iPhone的设计和功能。</td>
-                    <td>iPhone</td>
-                    <td>支持</td>
-                </tr>
-                <tr>
-                    <td>最近的政策让人感到不安。</td>
-                    <td>政策</td>
-                    <td>反对</td>
-                </tr>
-                <tr>
-                    <td>张艺兴的新专辑真的很棒！</td>
-                    <td>张艺兴</td>
-                    <td>支持</td>
-                </tr>
+            <tbody id="object-tbody">
+                <!-- 数据将动态插入于此 -->
             </tbody>
         </table>
     </div>
@@ -385,6 +361,47 @@
         function goBack() {
             window.history.back(); // 返回到上一个页面
         }
+        // 加载数据
+        function loadRandomData() {
+            return fetch('page2outcome.json')
+                .then(response => response.json());
+        }
+
+        // 刷新情感强度评分表格
+        function refreshIntensityData() {
+            loadRandomData().then(data => {
+                const randomSamples = getRandomItems(data.intensity_samples, 3);
+                const intensityTbody = document.getElementById('intensity-tbody');
+                intensityTbody.innerHTML = randomSamples.map(item => `
+                    <tr>
+                        <td>${item.text}</td>
+                        <td>${item.intensity}</td>
+                        <td>${item.category}</td>
+                    </tr>
+                `).join('');
+            });
+        }
+
+        // 刷新情感对象表格
+        function refreshObjectData() {
+            loadRandomData().then(data => {
+                const randomSamples = getRandomItems(data.object_samples, 3);
+                const objectTbody = document.getElementById('object-tbody');
+                objectTbody.innerHTML = randomSamples.map(item => `
+                    <tr>
+                        <td>${item.text}</td>
+                        <td>${item.object}</td>
+                        <td>${item.result}</td>
+                    </tr>
+                `).join('');
+            });
+        }
+
+        // 从数组中随机获取指定数量的项目
+        function getRandomItems(arr, count) {
+            const shuffled = arr.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
 
         // 声明全局变量
         let sentimentData = {};
@@ -401,6 +418,8 @@
         // 初始化页面
         document.addEventListener("DOMContentLoaded", () => {
             loadSentimentData(); // 加载情感数据
+            refreshIntensityData();
+            refreshObjectData();
             renderSentimentPieChart();
             renderFluctuationChart(currentFluctuationDimension);
             renderWordCloud(currentKeywordType);

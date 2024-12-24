@@ -37,9 +37,11 @@
 
         /* 返回按钮样式 */
         .back-button {
+            display: flex;
+            align-items: center; /* 垂直居中对齐 */
             position: absolute;
             top: 20px;
-            left: 20px;
+            left: 20px; /* 适当调整位置 */
             background-color: #00e5ff;
             border: none;
             color: #000000;
@@ -53,6 +55,12 @@
         .back-button:hover {
             background-color: #007acc; /* 深蓝色 */
             color: #ffffff;
+        }
+        /* 箭头图标样式 */
+        .arrow-icon {
+            margin-right: 5px; /* 图标与文本之间的间距 */
+            font-size: 18px; /* 图标大小 */
+            color: #000000; /* 图标颜色 */
         }
 
         /* 主内容区 */
@@ -252,7 +260,9 @@
 </head>
 <body>
      <!-- 返回按钮 -->
-    <button class="back-button" onclick="goBack()">返回</button>
+    <button class="back-button" onclick="goBack()">
+    <i class="fas fa-arrow-left arrow-icon"></i>返回首页
+    </button>
     <!-- 顶部标题栏 -->
     <div class="header">
         <h1>情感分析</h1>
@@ -359,7 +369,7 @@
 
          // 返回按钮的功能
         function goBack() {
-            window.history.back(); // 返回到上一个页面
+            window.location.href = "index.html"; // 返回到index
         }
         // 加载数据
         function loadRandomData() {

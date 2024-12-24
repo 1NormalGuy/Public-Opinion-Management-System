@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>话题分析</title>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <!-- 引入 Font Awesome（用于图标，可选） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自定义样式 -->
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000000; /* 黑色背景 */
+            margin: 0;
+            padding: 20px;
+            color: #00e5ff; /* 蓝色文字 */
+        }
+
+        /* 顶部标题栏 */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00e5ff, 0 0 10px #00e5ff;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #00e5ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* 左侧部分：自动识别的话题标签 */
+        .left-panel {
+            flex: 1;
+            min-width: 300px;
+            background-color: #1a1a1a; /* 深灰色背景 */
+            border: 2px solid #00e5ff;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        .left-panel h2 {
+            margin-top: 0;
+            color: #00e5ff;
+            text-shadow: 0 0 3px #00e5ff;
+        }
+
+        /* 按钮组样式 */
+        .button-group button {
+            background-color: #00e5ff;
+            border: none;
+            color: #000000;
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            box-shadow: 0 0 10px #00e5ff;
+        }
+
+        .button-group button.active,
+        .button-group button:hover {
+            background-color: #007acc; /* 深蓝色 */
+            color: #ffffff;
+            box-shadow: 0 0 20px #007acc;
+        }
+
+        /* 标签列表样式 */
+        #tag-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #tag-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #333333;
+            text-shadow: 0 0 3px #00e5ff;
+        }
+
+        /* 右侧部分：话题热度 */
+        .right-panel {
+            flex: 2;
+            min-width: 400px;
+            background-color: #1a1a1a; /* 深灰色背景 */
+            border: 2px solid #00e5ff;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        .right-panel h2 {
+            margin-top: 0;
+            color: #00e5ff;
+            text-shadow: 0 0 3px #00e5ff;
+        }
+
+        /* 话题趋势部分 */
+        .trend-section {
+            width: 100%;
+            background-color: #1a1a1a; /* 深灰色背景 */
+            border: 2px solid #00e5ff;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 30px;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        .trend-section h2 {
+            margin-top: 0;
+            color: #00e5ff;
+            text-shadow: 0 0 3px #00e5ff;
+        }
+
+        /* 话题趋势按钮组样式 */
+        .trend-button-group button {
+            background-color: #00e5ff;
+            border: none;
+            color: #000000;
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            box-shadow: 0 0 10px #00e5ff;
+        }
+
+        .trend-button-group button.active,
+        .trend-button-group button:hover {
+            background-color: #007acc; /* 深蓝色 */
+            color: #ffffff;
+            box-shadow: 0 0 20px #007acc;
+        }
+
+        /* 图表容器 */
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+
+        /* 示例数据 */
+        .sample-data {
+            background-color: #1a1a1a;
+            border: 2px solid #00e5ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            box-shadow: 0 0 15px #00e5ff;
+            color: #ffffff;
+            text-shadow: 0 0 3px #00e5ff;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.8); /* 黑色背景带透明度 */
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 5% auto; /* 5% from the top and centered */
+            padding: 20px;
+            border: 1px solid #00e5ff;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+            color: #00e5ff;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        .close {
+            color: #00e5ff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 3px #00e5ff;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .left-panel, .right-panel {
+                min-width: 100%;
+            }
+        }
+
+        /* 返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: #00e5ff; /* 按钮文字颜色 */
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: transparent; /* 按钮背景透明 */
+            border: 2px solid #00e5ff; /* 边框颜色 */
+            border-radius: 5px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 0 10px #00e5ff; /* 按钮发光效果 */
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #007acc; /* 按钮悬停背景颜色 */
+            color: #ffffff; /* 悬停文字颜色 */
+            box-shadow: 0 0 20px #007acc; /* 悬停发光效果 */
+        }
+
+        .back-button i {
+            font-size: 1.5em; /* 图标大小 */
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <div class="header">
+        <h1>话题分析</h1>
+    </div>
+    <!-- 返回按钮 -->
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 左侧部分：自动识别的话题标签 -->
+        <div class="left-panel" id="topic-tags">
+            <h2>自动识别的话题标签</h2>
+            <div class="button-group">
+                <button id="社会热点事件-btn" class="active">社会热点事件</button>
+                <button id="娱乐与文化事件-btn">娱乐与文化事件</button>
+                <button id="政治与政策相关事件-btn">政治与政策相关事件</button>
+                <button id="科技与创新-btn">科技与创新</button>
+            </div>
+            <ul id="tag-list">
+                <li>社会热点事件标签待填写</li>
+                <li>娱乐与文化事件标签待填写</li>
+                <li>政治与政策相关事件标签待填写</li>
+                <li>科技与创新标签待填写</li>
+            </ul>
+        </div>
+
+        <!-- 右侧部分：话题热度 -->
+        <div class="right-panel" id="topic-heat">
+            <h2>话题热度</h2>
+            <div class="chart-container" id="heat-chart"></div>
+            <!-- 示例数据放在图表下方 -->
+            <div class="sample-data">
+                <p><strong>示例数据：</strong></p>
+                <p>转发量、评论量、参与用户数等指标展示了各个话题的热度。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 话题趋势部分 -->
+    <div class="trend-section" id="trend-section">
+        <h2>话题趋势</h2>
+        <div class="trend-button-group">
+            <button id="trend-year-btn" class="active">按季度</button>
+            <button id="trend-month-btn">按月</button>
+        </div>
+        <div class="chart-container" id="trend-chart"></div>
+        <!-- 示例数据放在图表下方 -->
+        <div class="sample-data">
+            <p><strong>示例数据：</strong></p>
+            <p>展示了各个话题在不同时间维度下的热度变化趋势。</p>
+        </div>
+    </div>
+
+    <!-- 模态框结构 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body">
+                <!-- 模态框内容区域 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入您的自定义脚本 -->
+    <script>
+        // 示例数据
+        let tagData, heatData, trendDataMonth, trendDataYear;
+
+
+        // 加载 JSON 数据
+        async function loadData() {
+            try {
+                const response = await fetch('data1.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // 数据验证
+                if ( !data.tagData ||!data.heatData || !data.trendDataMonth || !data.trendDataYear) {
+                    throw new Error('Missing or invalid data format in data1.json');
+                }
+
+                // 赋值数据
+                tagData = {};
+                for (const category in data.tagData) {
+                    if (Array.isArray(data.tagData[category])) {
+                        tagData[category] = data.tagData[category]
+                            .sort(() => Math.random() - 0.5)
+                            .slice(0, 5); // 每个分类选取 5 条
+                    }
+                }
+                heatData = data.heatData.sort(() => Math.random() - 0.5).slice(0, 5);
+                trendDataMonth = Object.fromEntries(
+                    Object.entries(data.trendDataMonth)
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 5) // 选取 5 个 key
+                );
+
+                trendDataYear = Object.fromEntries(
+                    Object.entries(data.trendDataYear)
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 5) // 选取 5 个 key
+                );
+
+                // 初始化界面
+
+                init();
+
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.body.innerHTML += `
+                    <div style="color: red; padding: 20px; background: rgba(255,0,0,0.1); border: 1px solid red; margin: 10px;">
+                        Error loading data: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+
+        let currentCategory = "社会热点事件";
+        let currentTrendDimension = "year";
+
+        function init(){
+            displayTags(currentCategory);
+            renderHeatChart();
+            renderTrendChart(currentTrendDimension);
+            attachButtonEvents()
+        }
+        // 初始化标签列表和图表
+        document.addEventListener("DOMContentLoaded", () => {
+            loadData();
+        });
+        // 自动识别的话题标签
+        function displayTags(category) {
+            const tagList = document.getElementById('tag-list');
+            tagList.innerHTML = ''; // 清空列表
+            if (!tagData[category]) {
+                tagList.innerHTML = '<li>暂无数据</li>';
+                return;
+            }
+            tagData[category].sort((a, b) => b.heat - a.heat || b.relevance - a.relevance);
+            tagData[category].forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${item.tag}</strong> - 热度: ${item.heat} - 相关性: ${(item.relevance * 100).toFixed(1)}%`;
+                tagList.appendChild(li);
+            });
+        }
+
+
+
+
+
+        // 附加按钮事件监听
+        function attachButtonEvents() {
+            // 话题维度按钮
+            document.querySelectorAll('#topic-tags .button-group button').forEach(button => {
+                button.addEventListener('click', () => {
+                    // 移除其他按钮的激活状态
+                    button.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                    // 添加当前按钮的激活状态
+                    button.classList.add('active');
+
+                    const category = button.id.replace('-btn', '');
+                    currentCategory = category;
+                    displayTags(category);
+                });
+            });
+
+            // 话题趋势按钮
+            document.querySelectorAll('.trend-button-group button').forEach(button => {
+                button.addEventListener('click', () => {
+                    // 移除其他按钮的激活状态
+                    button.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                    // 添加当前按钮的激活状态
+                    button.classList.add('active');
+
+                    const dimension = button.id.includes('year') ? 'year' : 'month';
+                    currentTrendDimension = dimension;
+                    renderTrendChart(dimension);
+                });
+            });
+        }
+
+        // 话题热度柱状图
+        function renderHeatChart() {
+            const chartDom = document.getElementById('heat-chart');
+            const myChart = echarts.init(chartDom);
+            const option = {
+                title: {
+
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function(params) {
+                        let tooltip = `${params[0].name}<br/>`;
+                        params.forEach(param => {
+                            tooltip += `${param.seriesName}: ${param.value}<br/>`;
+                        });
+                        return tooltip;
+                    }
+                },
+                legend: {
+                    data: ['转发', '评论', '参与用户数'],
+                    textStyle: { color: '#00e5ff' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: heatData.map(item => item.topic),
+                    axisLabel: { color: '#00e5ff' },
+                    axisLine: { lineStyle: { color: '#00e5ff' } },
+                    axisTick: { show: false }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { color: '#00e5ff' },
+                    axisLine: { lineStyle: { color: '#00e5ff' } },
+                    splitLine: { lineStyle: { color: '#333333' } }
+                },
+                series: [
+                    {
+                        name: '转发',
+                        type: 'bar',
+                        data: heatData.map(item => item.reposts),
+                        itemStyle: { color: '#1e90ff' },
+                        emphasis: {
+                            itemStyle: {
+                                color: '#63b3ed'
+                            }
+                        }
+                    },
+                    {
+                        name: '评论',
+                        type: 'bar',
+                        data: heatData.map(item => item.comments),
+                        itemStyle: { color: '#32cd32' },
+                        emphasis: {
+                            itemStyle: {
+                                color: '#68d391'
+                            }
+                        }
+                    },
+                    {
+                        name: '参与用户数',
+                        type: 'bar',
+                        data: heatData.map(item => item.participants),
+                        itemStyle: { color: '#ff6347' },
+                        emphasis: {
+                            itemStyle: {
+                                color: '#fc8181'
+                            }
+                        }
+                    }
+                ],
+                animation: true,
+                animationDuration: 1500
+            };
+            option && myChart.setOption(option);
+
+            // 添加点击事件（示例：点击柱状图数据点打开模态框）
+            myChart.on('click', function (params) {
+                const topic = params.name;
+                const dataItem = heatData.find(item => item.topic === topic);
+                if (dataItem) {
+                    const content = `<h3>${topic} - 详细信息</h3>
+                                     <p>转发量: ${dataItem.reposts}</p>
+                                     <p>评论量: ${dataItem.comments}</p>
+                                     <p>参与用户数: ${dataItem.participants}</p>`;
+                    openModal(content);
+                }
+            });
+        }
+
+        // 话题趋势折线图
+        function renderTrendChart(dimension) {
+            const chartDom = document.getElementById('trend-chart');
+            const myChart = echarts.init(chartDom);
+            let data;
+            let xAxisData;
+
+            if (dimension === 'year') {
+                data = trendDataYear;
+                xAxisData = [ '第一季度', '第二季度', '第三季度', '第四季度'];
+            } else {
+                data = trendDataMonth;
+                xAxisData = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'];
+            }
+
+            const series = Object.keys(data).map(topic => ({
+                name: topic,
+                type: 'line',
+                data: data[topic],
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 8,
+                lineStyle: {
+                    width: 3
+                },
+                emphasis: {
+                    focus: 'series'
+                }
+            }));
+
+            const option = {
+                title: {
+
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: function(params) {
+                        let tooltip = `${params[0].name}<br/>`;
+                        params.forEach(param => {
+                            tooltip += `${param.seriesName}: ${param.value}<br/>`;
+                        });
+                        return tooltip;
+                    }
+                },
+                legend: {
+                    data: Object.keys(data),
+                    textStyle: { color: '#00e5ff' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xAxisData,
+                    axisLabel: { color: '#00e5ff' },
+                    axisLine: { lineStyle: { color: '#00e5ff' } },
+                    axisTick: { show: false }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { color: '#00e5ff' },
+                    axisLine: { lineStyle: { color: '#00e5ff' } },
+                    splitLine: { lineStyle: { color: '#333333' } }
+                },
+                series: series,
+                animation: true,
+                animationDuration: 1500
+            };
+
+            option && myChart.setOption(option);
+
+            // 添加点击事件（示例：点击折线图数据点打开模态框）
+            myChart.on('click', function (params) {
+                const topic = params.seriesName;
+                const value = params.value;
+                let detailedData;
+                if (currentTrendDimension === 'year') {
+                    detailedData = trendDataYear[topic][params.dataIndex];
+                } else {
+                    detailedData = trendDataMonth[topic][params.dataIndex];
+                }
+                const content = `<h3>${topic} - ${currentTrendDimension === 'year' ? '年' : '月'} ${params.name}</h3>
+                                 <p>热度值: ${value}</p>`;
+                openModal(content);
+            });
+        }
+
+        // 模态框控制函数
+        function openModal(content) {
+            const modal = document.getElementById("modal");
+            const modalBody = document.getElementById("modal-body");
+            modalBody.innerHTML = content;
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+
+        // 点击空白处关闭模态框
+        window.onclick = function(event) {
+            const modal = document.getElementById("modal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

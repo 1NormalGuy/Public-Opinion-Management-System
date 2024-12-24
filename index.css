@@ -224,7 +224,7 @@ body {
 
 /* 模态框中的图表 */
 .modal-chart {
-    width: 100%;
+    width:400px;
     height: 400px;
     margin-top: 20px;
 }
@@ -330,7 +330,6 @@ body {
     .modal-content .modal-header {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
         align-items: center;
         width: 100%;
         margin-bottom: 20px;

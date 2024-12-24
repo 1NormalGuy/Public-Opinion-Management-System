@@ -8,19 +8,53 @@ weiboData.forEach(item => {
     else if (item.sentiment === "中性") sentimentCount.neutral++;
     else sentimentCount.negative++;
 });
-const positiveRatio = (sentimentCount.positive / totalCount) * 100;
-const neutralRatio = (sentimentCount.neutral / totalCount) * 100;
-const negativeRatio = (sentimentCount.negative / totalCount) * 100;
+const positiveRatio = (9418 / totalCount) * 100;
+const neutralRatio = (701 / totalCount) * 100;
+const negativeRatio = (11055/ totalCount) * 100;
 
-// 时间维度统计数据（模拟数据）
+
+/// 时间维度统计数据（模拟数据）
 const timeStats = {
-    week: { reposts: 400, comments: 200 },
-    month: { reposts: 1600, comments: 800 },
-    year: { total: 20731 }
+    week: { 
+        total: 1870,         // reposts + comments = 1145 + 725
+        reposts: 1145, 
+        comments: 725 
+    },
+    month: { 
+        total: 30816,        // reposts + comments = 20731 + 10085
+        reposts: 20731, 
+        comments: 10085 
+    },
+    year: { 
+        total: 30492,        // reposts + comments = 19771 + 10721
+        reposts: 19771, 
+        comments: 10721 
+    }
+};
+
+
+// 各时间维度的折线图数据（模拟数据）
+const timeChartData = {
+    week: {
+        xAxis: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        reposts: [145, 132, 158, 123, 167, 140, 180],
+        comments: [95, 88, 102, 76, 119, 110, 135]
+    },
+    month: {
+        xAxis: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+        reposts: [1587, 1423, 1750, 1605, 1902, 1850, 1703, 2001, 1804, 1950, 2102, 1800],
+        comments: [820, 760, 910, 845, 980, 900, 875, 1020, 930, 1005, 1150, 870]
+    },
+    year: {
+        xAxis: ['第一季度', '第二季度', '第三季度', '第四季度'],
+        reposts: [5000, 4800, 5200, 4771],
+        comments: [2500, 2400, 2600, 3221]
+    }
 };
 
 // 2024年每月的数据（模拟数据，总和为20731）
-const monthlyData = [1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2831];
+const monthlyData = [1600, 1500, 1800, 1700, 1900, 1650, 2100, 1950, 1750, 2000, 2200, 20631 - (1600 + 1500 + 1800 + 1700 + 1900 + 1650 + 2100 + 1950 + 1750 + 2000 + 2200)];
+
 
 /* 
     关键词统计（从 weiboData 计算）
@@ -99,14 +133,18 @@ function updateInteractionPreview() {
 
 function openModal(boxId) {
     const modalBody = document.getElementById("modal-body");
-    const modalChart = document.getElementById("modal-chart");
+    const modal = document.getElementById("modal");
 
     // 清空之前的内容和样式
     modalBody.innerHTML = "";
     modalBody.className = "modal-body";
-    if (echarts.getInstanceByDom(modalChart)) {
-        echarts.dispose(modalChart);
-    }
+    // 销毁之前的所有图表实例
+    const allCharts = modalBody.querySelectorAll('.modal-chart, #timeChart, #interactionChart, .chart-section');
+    allCharts.forEach(chartDom => {
+        if (echarts.getInstanceByDom(chartDom)) {
+            echarts.dispose(chartDom);
+        }
+    });
 
     if (boxId === 1) {
         // 数据总览
@@ -117,6 +155,7 @@ function openModal(boxId) {
             <p>正面情感比例: ${positiveRatio.toFixed(1)}%</p>
             <p>中性情感比例: ${neutralRatio.toFixed(1)}%</p>
             <p>负面情感比例: ${negativeRatio.toFixed(1)}%</p>
+            <div id="overviewChart" class="modal-chart"></div>
         `;
         showModalChart('overview');
     } else if (boxId === 2) {
@@ -124,13 +163,20 @@ function openModal(boxId) {
         modalBody.classList.add("time-stats");
         modalBody.innerHTML = `
             <h3>时间维度数据统计</h3>
-            <p>周平均转发: ${timeStats.week.reposts} 条</p>
-            <p>周平均评论: ${timeStats.week.comments} 条</p>
-            <p>月平均转发: ${timeStats.month.reposts} 条</p>
-            <p>月平均评论: ${timeStats.month.comments} 条</p>
-            <p>年总数: ${timeStats.year.total} 条</p>
+            <label for="timeDimensionSelect">选择时间维度:</label>
+            <select id="timeDimensionSelect" onchange="updateTimeDimension()">
+                <option value="week">周</option>
+                <option value="month" selected>月</option>
+                <option value="year">年</option>
+            </select>
+            <div id="timeContent">
+                <!-- 动态显示时间维度内容 -->
+            </div>
+            <div id="timeChart" class="modal-chart"></div>
         `;
-        showModalChart('time');
+        // 默认显示月数据
+        displayTimeStats('month');
+        showModalChart('time', 'month');
     } else if (boxId === 3) {
         // 互动分析
         modalBody.classList.add("interaction-analysis");
@@ -142,6 +188,7 @@ function openModal(boxId) {
                     <p>内容: "${item.content.slice(0, 30)}..."<br>转发: ${item.reposts}, 评论: ${item.comments}</p>
                 `).join('')}
             </div>
+            <div id="interactionChart" class="modal-chart"></div>
         `;
         showModalChart('interaction');
     } else if (boxId === 4) {
@@ -157,43 +204,82 @@ function openModal(boxId) {
                     </div>
                 `).join('')}
             </div>
-            <div class="chart-section"></div>
+            <div class="chart-section modal-chart"></div> <!-- 确保有充足的高度和宽度 -->
         `;
         showModalChart('keywords');
     }
-    
 
-    document.getElementById("modal").style.display = "block";
-    setTimeout(() => {
-        const modalChartInstance = echarts.getInstanceByDom(modalChart);
-        if (modalChartInstance) {
-            modalChartInstance.resize();
-        }
-    }, 100);
+    // 显示模态框
+    modal.style.display = "block";
+
+    // 确保图表在模态框完全显示后调整大小
+    requestAnimationFrame(() => {
+        // 延迟调整以确保模态框渲染完成
+        setTimeout(() => {
+            if (boxId === 1) {
+                const overviewChart = echarts.init(document.getElementById('overviewChart'));
+                // 设置数据总览图表
+                overviewChart.setOption({
+                    tooltip: {},
+                    xAxis: {
+                        type: 'category',
+                        data: ['正面', '中性', '负面'],
+                        axisLabel: { color: '#00e5ff' },
+                        axisLine: { lineStyle: { color: '#00e5ff' } }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: { color: '#00e5ff' },
+                        axisLine: { lineStyle: { color: '#00e5ff' } }
+                    },
+                    series: [{
+                        type: 'bar',
+                        data: [sentimentCount.positive, sentimentCount.neutral, sentimentCount.negative],
+                        itemStyle: { color: '#00e5ff' },
+                        barWidth: '50%'
+                    }]
+                });
+                overviewChart.resize();
+            }
+        }, 100);
+    });
 }
 
 function closeModal() {
-    document.getElementById("modal").style.display = "none";
+    const modal = document.getElementById("modal");
+    modal.style.display = "none";
 }
 
 // 根据选择显示时间统计
-function displayTimeStats() {
-    const dimensionValue = document.getElementById("timeDimension").value;
+function displayTimeStats(dimension) {
     let displayText = '';
-    if (dimensionValue === "week") {
+    if (dimension === "week") {
         displayText = `
+            总数: ${timeStats.week.total} 条<br>
             转发平均: ${timeStats.week.reposts} 条<br>
             评论平均: ${timeStats.week.comments} 条
         `;
-    } else if (dimensionValue === "month") {
+    } else if (dimension === "month") {
         displayText = `
+            总数: ${timeStats.month.total} 条<br>
             转发平均: ${timeStats.month.reposts} 条<br>
             评论平均: ${timeStats.month.comments} 条
         `;
-    } else if (dimensionValue === "year") {
-        displayText = `年总数：${timeStats.year.total} 条`;
+    } else if (dimension === "year") {
+        displayText = `
+            总数: ${timeStats.year.total} 条<br>
+            转发平均: ${timeStats.year.reposts} 条<br>
+            评论平均: ${timeStats.year.comments} 条
+        `;
     }
     document.getElementById("timeContent").innerHTML = displayText;
+}
+
+// 更新时间维度选择
+function updateTimeDimension() {
+    const selectedDimension = document.getElementById("timeDimensionSelect").value;
+    displayTimeStats(selectedDimension);
+    showModalChart('time', selectedDimension);
 }
 
 // 初始化地图
@@ -257,12 +343,18 @@ function loadMap() {
 }
 
 // 根据不同类型展示不同的图表
-function showModalChart(type) {
+function showModalChart(type, dimension = null) {
     let chartDom;
     let modalChart;
 
     if (type === 'keywords') {
         chartDom = document.querySelector('.chart-section');
+    } else if (type === 'interaction') {
+        chartDom = document.getElementById('interactionChart');
+    } else if (type === 'time') {
+        chartDom = document.getElementById('timeChart');
+    } else if (type === 'overview') {
+        chartDom = document.getElementById('overviewChart');
     } else {
         chartDom = document.getElementById('modal-chart');
     }
@@ -292,20 +384,26 @@ function showModalChart(type) {
             },
             series: [{
                 type: 'bar',
-                data: [sentimentCount.positive, sentimentCount.neutral, sentimentCount.negative],
+                data: [9418, 701, 11055],
                 itemStyle: { color: '#00e5ff' },
                 barWidth: '50%'
             }]
         };
     } else if (type === 'time') {
-        // 2024年1-12月的折线图（使用模拟数据）
+        if (!dimension) dimension = 'year'; // 默认选择月
+
+        const data = timeChartData[dimension];
         option = {
             tooltip: {
                 trigger: 'axis'
             },
+            legend: {
+                data: ['转发', '评论'],
+                textStyle: { color: '#00e5ff' }
+            },
             xAxis: {
                 type: 'category',
-                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                data: data.xAxis,
                 axisLabel: { color: '#00e5ff' },
                 axisLine: { lineStyle: { color: '#00e5ff' } }
             },
@@ -314,13 +412,24 @@ function showModalChart(type) {
                 axisLabel: { color: '#00e5ff' },
                 axisLine: { lineStyle: { color: '#00e5ff' } }
             },
-            series: [{
-                type: 'line',
-                data: monthlyData,
-                itemStyle: { color: '#00e5ff' },
-                lineStyle: { color: '#00e5ff' },
-                smooth: true
-            }]
+            series: [
+                {
+                    name: '转发',
+                    type: 'line',
+                    data: data.reposts,
+                    itemStyle: { color: '#00e5ff' },
+                    lineStyle: { color: '#00e5ff' },
+                    smooth: true
+                },
+                {
+                    name: '评论',
+                    type: 'line',
+                    data: data.comments,
+                    itemStyle: { color: '#00bcd4' },
+                    lineStyle: { color: '#00bcd4' },
+                    smooth: true
+                }
+            ]
         };
     } else if (type === 'interaction') {
         // 互动分析柱状图
@@ -337,7 +446,7 @@ function showModalChart(type) {
             xAxis: {
                 type: 'category',
                 data: xData,
-                axisLabel: { color: '#00e5ff', rotate: 30 },
+                axisLabel: { color: '#00e5ff', rotate: 30, interval: 0 },
                 axisLine: { lineStyle: { color: '#00e5ff' } }
             },
             yAxis: {
@@ -363,7 +472,6 @@ function showModalChart(type) {
             ]
         };
     } else if (type === 'keywords') {
-    
         // 验证 randomKeywordsArray 是否有数据
         if (!randomKeywordsArray || randomKeywordsArray.length === 0) {
             console.error('randomKeywordsArray is empty or undefined.');
@@ -413,15 +521,10 @@ function showModalChart(type) {
                 ]
             };
         }
-    
-        // 设置图表选项
-        modalChart.setOption(option, { notMerge: true });
-    
-
     }
-    
 
     modalChart.setOption(option, { notMerge: true });
+    modalChart.resize();
 }
 
 // 语言切换功能
@@ -432,12 +535,12 @@ function toggleWordCloud() {
     if (currentLanguage === 'zh') {
         // 切换到英文词云
         iframe.src = wordCloudSources['en'];
-        button.textContent = '切换到中文词云';
+        button.textContent = 'CN';
         currentLanguage = 'en';
     } else {
         // 切换到中文词云
         iframe.src = wordCloudSources['zh'];
-        button.textContent = '切换到英文词云';
+        button.textContent = 'EN';
         currentLanguage = 'zh';
     }
 }
@@ -462,22 +565,19 @@ function refreshKeywords() {
 
 // 确保图表在窗口大小变化时自适应
 window.addEventListener('resize', () => {
-    const mapChart = echarts.getInstanceByDom(document.getElementById('mapContainer'));
-    if (mapChart) {
-        mapChart.resize();
-    }
-
-    const modalChart = echarts.getInstanceByDom(document.getElementById('modal-chart'));
-    if (modalChart) {
-        modalChart.resize();
-    }
-
-    const keywordChart = echarts.getInstanceByDom(document.querySelector('.chart-section'));
-    if (keywordChart) {
-        keywordChart.resize();
-    }
+    const allCharts = [
+        echarts.getInstanceByDom(document.getElementById('mapContainer')),
+        echarts.getInstanceByDom(document.getElementById('overviewChart')),
+        echarts.getInstanceByDom(document.getElementById('timeChart')),
+        echarts.getInstanceByDom(document.getElementById('interactionChart')),
+        echarts.getInstanceByDom(document.querySelector('.chart-section'))
+    ];
+    allCharts.forEach(chart => {
+        if (chart) {
+            chart.resize();
+        }
+    });
 });
-
 
 // 显示加载界面
 function showLoadingScreen() {
@@ -495,7 +595,7 @@ function hideLoadingScreen() {
     }
 }
 
-// 自定义导航函数
+// 自定义导航函数modal-chart
 function navigateTo(url) {
     showLoadingScreen();
     // 生成2到5秒的随机延迟
